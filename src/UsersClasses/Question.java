@@ -33,10 +33,10 @@ public class Question {
         this.answer3 = answer3;
     }
     public void setAnswer4(String answer4){
-        this.answer3 = answer4;
+        this.answer4 = answer4;
     }
     public void setAnswer(String answer){
-        this.answer3 = answer;
+        this.answer = answer;
     }
     public String getQuestion(){
         return Question;

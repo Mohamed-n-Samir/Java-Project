@@ -24,6 +24,7 @@ public class TeacherHome extends javax.swing.JFrame {
 
     DbConnection dbConnection = new DbConnection();
     Test test = new Test();
+    Question question = new Question();
 
     public TeacherHome() {
         initComponents();
@@ -99,7 +100,7 @@ public class TeacherHome extends javax.swing.JFrame {
             ResultSetMetaData RSM = rs.getMetaData();
 
             int c;
-            c = RSM.getColumnCount() - 2;                //use this if you use *
+            c = RSM.getColumnCount() - 1;                //use this if you use *
 
             int numberOfRows = 0;
 
@@ -107,13 +108,13 @@ public class TeacherHome extends javax.swing.JFrame {
             DF.setRowCount(0);
             String[] colName = new String[c];
             for (int i = 1; i <= c; i++) {
-                colName[i - 1] = RSM.getColumnName(i + 1);
+                colName[i - 1] = RSM.getColumnName(i);
             }
             DF.setColumnIdentifiers(colName);
 
             Object[] rows;
             while (rs.next()) {
-                DF.addRow(rows = new Object[]{rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
+                DF.addRow(rows = new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
                 numberOfRows++;
             }
 //            test.setListNumberOfQuestions(numberOfRows);
@@ -125,6 +126,8 @@ public class TeacherHome extends javax.swing.JFrame {
 //                  }
 //              DF.addRow(v2);
 //              }
+            QuestionTable.getColumnModel().getColumn(0).setMinWidth(0);
+            QuestionTable.getColumnModel().getColumn(0).setMaxWidth(0);
 
         } catch (SQLException ex) {
             Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
@@ -185,11 +188,11 @@ public class TeacherHome extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         answer3 = new RoundedJTextFieldTest(50);
         jLabel22 = new javax.swing.JLabel();
-        answer = new RoundedJTextFieldTest(50);
         jLabel23 = new javax.swing.JLabel();
         newTestName = new RoundedJTextFieldTest(50);
         jLabel24 = new javax.swing.JLabel();
         updateDeleteBotton = new javax.swing.JButton();
+        answer = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TestTable = new javax.swing.JTable();
@@ -207,11 +210,11 @@ public class TeacherHome extends javax.swing.JFrame {
         jLabel31 = new javax.swing.JLabel();
         answer4FromTable = new RoundedJTextFieldTest(50);
         jLabel32 = new javax.swing.JLabel();
-        answerFromTable = new RoundedJTextFieldTest(50);
         jLabel33 = new javax.swing.JLabel();
         questionFromTable = new RoundedJTextFieldTest(50);
         jLabel34 = new javax.swing.JLabel();
         listNumberOfQuestions = new javax.swing.JLabel();
+        answerFromTable = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -689,21 +692,6 @@ public class TeacherHome extends javax.swing.JFrame {
         jLabel22.setText("answer3:");
         jPanel6.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 280, -1, 30));
 
-        answer.setBackground(new java.awt.Color(45, 68, 86));
-        answer.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
-        answer.setForeground(new java.awt.Color(153, 153, 153));
-        answer.setText("answer");
-        answer.setFocusable(false);
-        answer.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                answerFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                answerFocusLost(evt);
-            }
-        });
-        jPanel6.add(answer, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 420, 420, 70));
-
         jLabel23.setFont(new java.awt.Font("Lato", 3, 18)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(51, 51, 51));
         jLabel23.setText("answer:");
@@ -746,6 +734,14 @@ public class TeacherHome extends javax.swing.JFrame {
             }
         });
         jPanel6.add(updateDeleteBotton, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, 130, 60));
+
+        answer.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        answer.setForeground(new java.awt.Color(45, 68, 86));
+        answer.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Answer 1", "Answer 2", "Answer 3", "Answer 4" }));
+        answer.setBorder(null);
+        answer.setEnabled(false);
+        answer.setLightWeightPopupEnabled(false);
+        jPanel6.add(answer, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 420, 420, 70));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -798,6 +794,13 @@ public class TeacherHome extends javax.swing.JFrame {
 
             }
         ));
+        QuestionTable.setSurrendersFocusOnKeystroke(true);
+        QuestionTable.setUpdateSelectionOnSort(false);
+        QuestionTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                QuestionTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(QuestionTable);
 
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(899, 40, 650, 240));
@@ -817,6 +820,7 @@ public class TeacherHome extends javax.swing.JFrame {
         updateQuestionFromTable.setForeground(new java.awt.Color(255, 255, 255));
         updateQuestionFromTable.setText("Update");
         updateQuestionFromTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        updateQuestionFromTable.setEnabled(false);
         updateQuestionFromTable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateQuestionFromTableActionPerformed(evt);
@@ -829,6 +833,7 @@ public class TeacherHome extends javax.swing.JFrame {
         deleteQuestionFromTable.setForeground(new java.awt.Color(255, 255, 255));
         deleteQuestionFromTable.setText("Delete");
         deleteQuestionFromTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteQuestionFromTable.setEnabled(false);
         deleteQuestionFromTable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteQuestionFromTableActionPerformed(evt);
@@ -921,21 +926,6 @@ public class TeacherHome extends javax.swing.JFrame {
         jLabel32.setText("Answer4:");
         jPanel2.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 450, -1, -1));
 
-        answerFromTable.setBackground(new java.awt.Color(45, 68, 86));
-        answerFromTable.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
-        answerFromTable.setForeground(new java.awt.Color(153, 153, 153));
-        answerFromTable.setText("answer");
-        answerFromTable.setFocusable(false);
-        answerFromTable.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                answerFromTableFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                answerFromTableFocusLost(evt);
-            }
-        });
-        jPanel2.add(answerFromTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 500, 559, 60));
-
         jLabel33.setFont(new java.awt.Font("Lato", 3, 18)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(51, 51, 51));
         jLabel33.setText("Answer:");
@@ -972,6 +962,14 @@ public class TeacherHome extends javax.swing.JFrame {
         listNumberOfQuestions.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         listNumberOfQuestions.setOpaque(true);
         jPanel2.add(listNumberOfQuestions, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 10, 40, 20));
+
+        answerFromTable.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        answerFromTable.setForeground(new java.awt.Color(45, 68, 86));
+        answerFromTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Answer 1", "Answer 2", "Answer 3", "Answer 4" }));
+        answerFromTable.setBorder(null);
+        answerFromTable.setEnabled(false);
+        answerFromTable.setLightWeightPopupEnabled(false);
+        jPanel2.add(answerFromTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 500, 560, 60));
 
         jTabbedPane1.addTab("tab3", jPanel2);
 
@@ -1147,6 +1145,7 @@ public class TeacherHome extends javax.swing.JFrame {
 
             }
         }
+        afterRefreshQuestionTable();
 
     }//GEN-LAST:event_addTestButtonActionPerformed
 
@@ -1233,16 +1232,16 @@ public class TeacherHome extends javax.swing.JFrame {
                     String ans2 = answer2.getText().trim().length() > 0 && answer2.getText().trim().length() < 255 ? answer2.getText() : null;
                     String ans3 = answer3.getText().trim().length() > 0 && answer3.getText().trim().length() < 255 ? answer3.getText() : null;
                     String ans4 = answer4.getText().trim().length() > 0 && answer4.getText().trim().length() < 255 ? answer4.getText() : null;
-                    String ans = answer.getText().trim().length() > 0 && answer.getText().trim().length() < 255 ? answer.getText() : null;
-                    if (Question == null || ans1 == null || ans2 == null || ans3 == null || ans4 == null || ans == null) {
+                    int ans = answer.getSelectedIndex();
+                    if (Question == null || ans1 == null || ans2 == null || ans3 == null || ans4 == null) {
                         ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
                         JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Question cant be less than 4<br> charcters and not more than 255 characters and<br>Answers can't be less than 1 character!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
-                    } else if ((!ans.equals(ans1)) && (!ans.equals(ans2)) && (!ans.equals(ans3)) && (!ans.equals(ans4))) {
-                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong answer Input! answer field must be <br>Equal at least one another field! !</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
-
-                    } else {
-                        Question = Question.concat("?");
+                    } //                    else if ((!ans.equals(ans1)) && (!ans.equals(ans2)) && (!ans.equals(ans3)) && (!ans.equals(ans4))) {
+                    //                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                    //                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong answer Input! answer field must be <br>Equal at least one another field! !</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
+                    //                    } 
+                    else {
+                        Question = Question.charAt(Question.length() - 1) == '?' ? Question : Question.concat("?");
                         try {
                             pst = connection.prepareStatement("insert into Questions(question,answer1,answer2,answer3,answer4,answer,testID) values(?,?,?,?,?,?,?)");
                             pst.setString(1, Question.substring(0, 1).toUpperCase() + Question.substring(1));
@@ -1250,7 +1249,24 @@ public class TeacherHome extends javax.swing.JFrame {
                             pst.setString(3, ans2.substring(0, 1).toUpperCase() + ans2.substring(1));
                             pst.setString(4, ans3.substring(0, 1).toUpperCase() + ans3.substring(1));
                             pst.setString(5, ans4.substring(0, 1).toUpperCase() + ans4.substring(1));
-                            pst.setString(6, ans.substring(0, 1).toUpperCase() + ans.substring(1));
+
+                            switch (ans) {
+                                case 0:
+                                    pst.setString(6, "Answer 1");
+                                    break;
+                                case 1:
+                                    pst.setString(6, "Answer 2");
+                                    break;
+                                case 2:
+                                    pst.setString(6, "Answer 3");
+                                    break;
+                                case 3:
+                                    pst.setString(6, "Answer 4");
+                                    break;
+                                default:
+                                    throw new AssertionError();
+                            }
+
                             pst.setInt(7, test.getupdateTestID());
                             int k = pst.executeUpdate();
                             if (k == 1) {
@@ -1280,7 +1296,7 @@ public class TeacherHome extends javax.swing.JFrame {
             } else {
                 ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
                 JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Failed to connect to the DataBase!</p></html>", "Bad Connection!", JOptionPane.INFORMATION_MESSAGE, image);
-                ;
+
             }
 
         } else {
@@ -1295,6 +1311,7 @@ public class TeacherHome extends javax.swing.JFrame {
 
             }
         }
+        afterRefreshQuestionTable();
 
 
     }//GEN-LAST:event_addQuestionButtonActionPerformed
@@ -1467,6 +1484,7 @@ public class TeacherHome extends javax.swing.JFrame {
 
             }
         }
+        afterRefreshQuestionTable();
 
 
     }//GEN-LAST:event_updateTestButtonActionPerformed
@@ -1501,20 +1519,6 @@ public class TeacherHome extends javax.swing.JFrame {
     private void answer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_answer2ActionPerformed
-
-    private void answerFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_answerFocusGained
-        // TODO add your handling code here:
-
-        PlaceHolderOF(answer, "answer");
-
-    }//GEN-LAST:event_answerFocusGained
-
-    private void answerFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_answerFocusLost
-        // TODO add your handling code here:
-
-        PlaceHolderOFL(answer, "answer");
-
-    }//GEN-LAST:event_answerFocusLost
 
     private void newNoOfQuestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newNoOfQuestionsActionPerformed
         // TODO add your handling code here:
@@ -1608,10 +1612,67 @@ public class TeacherHome extends javax.swing.JFrame {
 
             }
         }
+        afterRefreshQuestionTable();
     }//GEN-LAST:event_updateDeleteBottonActionPerformed
 
     private void deleteQuestionFromTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteQuestionFromTableActionPerformed
         // TODO add your handling code here:
+
+        if (LoggedIn()) {
+            String[] options = {"Yes", "No"};
+
+            ImageIcon imageExclamation = new ImageIcon(getClass().getResource("/Images/exclamation-mark.png"));
+            int a = JOptionPane.showOptionDialog(this, "Are you sure that you want to delete this Question?", "Delete Alert!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, imageExclamation, options, 0);
+            if (a == 0) {
+                try {
+
+                    Connection connection = dbConnection.ConnectDB();
+                    PreparedStatement pst;
+                    pst = connection.prepareStatement("delete from Questions where (testID = ? and ID = ?)");
+                    pst.setInt(1, test.getListTestID());
+                    pst.setInt(2, question.getQuestionID());
+
+                    int k = pst.executeUpdate();
+
+                    if (k == 1) {
+
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
+                        JOptionPane.showMessageDialog(this, "<html><p style=\"text-align: center;\">Question Deleted Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+                        QuestionTable();
+                        afterRefreshQuestionTable();
+
+//                        listNumberOfQuestions.setText(test.getNumberOfQuestions() + "");
+
+                    } else {
+
+
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Failed to delete Question!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+                        QuestionTable();
+                        afterRefreshQuestionTable();
+
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
+
+                }
+            }
+
+        } else {
+            String[] options = {"Login", "Exit"};
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            int a = JOptionPane.showOptionDialog(null, "To Add test you must Login as Teacher first?", "Login or Exit!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, image, options, 0);
+            if (a == 0) {
+                setVisible(false);
+                new TeacherLogin().setVisible(true);
+            } else if (a == 1) {
+                System.exit(0);
+
+            }
+        }
+
+
     }//GEN-LAST:event_deleteQuestionFromTableActionPerformed
 
     private void updateQuestionFromTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateQuestionFromTableActionPerformed
@@ -1625,6 +1686,8 @@ public class TeacherHome extends javax.swing.JFrame {
         int SelectIndex = TestTable.getSelectedRow();
         test.setListID(Integer.parseInt(d1.getValueAt(SelectIndex, 0).toString()));
         QuestionTable();
+        afterRefreshQuestionTable();
+
         //        String employeeNo = d1.getValueAt(SelectIndex, 0).toString();
         //        txtAddress.setText(d1.getValueAt(SelectIndex, 2).toString());
         //        txtSalary.setText(d1.getValueAt(SelectIndex, 3).toString());
@@ -1668,14 +1731,6 @@ public class TeacherHome extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_answer4FromTableFocusLost
 
-    private void answerFromTableFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_answerFromTableFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_answerFromTableFocusGained
-
-    private void answerFromTableFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_answerFromTableFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_answerFromTableFocusLost
-
     private void answer1FromTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_answer1FromTableActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_answer1FromTableActionPerformed
@@ -1691,6 +1746,45 @@ public class TeacherHome extends javax.swing.JFrame {
     private void questionFromTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_questionFromTableActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_questionFromTableActionPerformed
+
+    private void QuestionTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_QuestionTableMouseClicked
+        // TODO add your handling code here:
+
+        DefaultTableModel d1 = (DefaultTableModel) QuestionTable.getModel();
+        int SelectIndex = QuestionTable.getSelectedRow();
+        question.setQuestionID(Integer.parseInt(d1.getValueAt(SelectIndex, 0).toString()));
+        question.setQuestion(d1.getValueAt(SelectIndex, 1).toString());
+        question.setAnswer1(d1.getValueAt(SelectIndex, 2).toString());
+        question.setAnswer2(d1.getValueAt(SelectIndex, 3).toString());
+        question.setAnswer3(d1.getValueAt(SelectIndex, 4).toString());
+        question.setAnswer4(d1.getValueAt(SelectIndex, 5).toString());
+        question.setAnswer(d1.getValueAt(SelectIndex, 6).toString());
+
+//        System.out.println(d1.getValueAt(SelectIndex, 0).toString()+"   "+d1.getValueAt(SelectIndex, 1).toString()+"   "+ d1.getValueAt(SelectIndex, 2).toString()+"   "+ d1.getValueAt(SelectIndex, 3).toString()+"   "+ d1.getValueAt(SelectIndex, 4).toString()+"   "+ d1.getValueAt(SelectIndex, 5).toString()+"   "+"   "+ d1.getValueAt(SelectIndex, 6).toString());
+        if (SelectIndex != -1) {
+            setFromTableField(true);
+            setColorForFromTableField(Color.white);
+            questionFromTable.setText(question.getQuestion());
+            answer1FromTable.setText(question.getAnswer1());
+            answer2FromTable.setText(question.getAnswer2());
+            answer3FromTable.setText(question.getAnswer3());
+            answer4FromTable.setText(question.getAnswer4());
+
+            if (question.getAnswer().equals("Answer 1")) {
+                answerFromTable.setSelectedIndex(0);
+            } else if (question.getAnswer().equals("Answer 2")) {
+                answerFromTable.setSelectedIndex(1);
+
+            } else if (question.getAnswer().equals("Answer 3")) {
+                answerFromTable.setSelectedIndex(2);
+
+            } else if (question.getAnswer().equals("Answer 4")) {
+                answerFromTable.setSelectedIndex(3);
+            }
+        }
+
+
+    }//GEN-LAST:event_QuestionTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1756,12 +1850,12 @@ public class TeacherHome extends javax.swing.JFrame {
         answer2.setText("");
         answer3.setText("");
         answer4.setText("");
-        answer.setText("");
+        answer.setSelectedIndex(0);
         answer1.requestFocus();
         answer2.requestFocus();
         answer3.requestFocus();
         answer4.requestFocus();
-        answer.requestFocus();
+//        answer.requestFocus();
         addQuestion.requestFocus();
         addQuestion.setForeground(Color.white);
     }
@@ -1803,7 +1897,7 @@ public class TeacherHome extends javax.swing.JFrame {
         answer2.setFocusable(b);
         answer3.setFocusable(b);
         answer4.setFocusable(b);
-        answer.setFocusable(b);
+        answer.setEnabled(b);
 //        testID.setFocusable(b);
         newTestName.setFocusable(b);
         newTimeDuration.setFocusable(b);
@@ -1814,6 +1908,36 @@ public class TeacherHome extends javax.swing.JFrame {
         DefaultTableModel DF = (DefaultTableModel) QuestionTable.getModel();
         DF.setRowCount(0);
     }
+
+    void setFromTableField(boolean b) {
+        questionFromTable.setFocusable(b);
+        answer1FromTable.setFocusable(b);
+        answer2FromTable.setFocusable(b);
+        answer3FromTable.setFocusable(b);
+        answer4FromTable.setFocusable(b);
+        answerFromTable.setEnabled(b);
+        updateQuestionFromTable.setEnabled(b);
+        deleteQuestionFromTable.setEnabled(b);
+    }
+
+    void setColorForFromTableField(Color c) {
+        questionFromTable.setForeground(c);
+        answer1FromTable.setForeground(c);
+        answer2FromTable.setForeground(c);
+        answer3FromTable.setForeground(c);
+        answer4FromTable.setForeground(c);
+    }
+
+    void afterRefreshQuestionTable() {
+        questionFromTable.setText("Question");
+        answer1FromTable.setText("answer");
+        answer2FromTable.setText("answer");
+        answer3FromTable.setText("answer");
+        answer4FromTable.setText("answer");
+        answerFromTable.setSelectedIndex(0);
+        setFromTableField(false);
+        setColorForFromTableField(new Color(153, 153, 153));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Profile;
     private javax.swing.JTable QuestionTable;
@@ -1822,7 +1946,7 @@ public class TeacherHome extends javax.swing.JFrame {
     private javax.swing.JButton addQuestionButton;
     private javax.swing.JButton addTest;
     private javax.swing.JButton addTestButton;
-    private javax.swing.JTextField answer;
+    private javax.swing.JComboBox<String> answer;
     private javax.swing.JTextField answer1;
     private javax.swing.JTextField answer1FromTable;
     private javax.swing.JTextField answer2;
@@ -1831,7 +1955,7 @@ public class TeacherHome extends javax.swing.JFrame {
     private javax.swing.JTextField answer3FromTable;
     private javax.swing.JTextField answer4;
     private javax.swing.JTextField answer4FromTable;
-    private javax.swing.JTextField answerFromTable;
+    private javax.swing.JComboBox<String> answerFromTable;
     private javax.swing.JButton clearButton;
     private javax.swing.JButton closeApplication;
     private javax.swing.JButton deleteQuestionFromTable;
