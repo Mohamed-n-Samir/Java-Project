@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
@@ -116,6 +117,7 @@ public class TeacherHome extends javax.swing.JFrame {
             while (rs.next()) {
                 DF.addRow(rows = new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
                 numberOfRows++;
+//                System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + " " + rs.getString(6) + " " + rs.getString(7));
             }
 //            test.setListNumberOfQuestions(numberOfRows);
             listNumberOfQuestions.setText(numberOfRows + "");
@@ -210,13 +212,14 @@ public class TeacherHome extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         answer3FromTable = new RoundedJTextFieldTest(50);
         jLabel31 = new javax.swing.JLabel();
+        answerFromTable = new javax.swing.JComboBox<>();
         answer4FromTable = new RoundedJTextFieldTest(50);
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         questionFromTable = new RoundedJTextFieldTest(50);
         jLabel34 = new javax.swing.JLabel();
         listNumberOfQuestions = new javax.swing.JLabel();
-        answerFromTable = new javax.swing.JComboBox<>();
+        answerFromTableTxt = new RoundedJTextFieldTest(50);
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -909,11 +912,11 @@ public class TeacherHome extends javax.swing.JFrame {
                 answer2FromTableFocusLost(evt);
             }
         });
-        jPanel2.add(answer2FromTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, 560, 60));
+        jPanel2.add(answer2FromTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 360, 560, 60));
 
         jLabel30.setFont(new java.awt.Font("Lato", 3, 18)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel30.setText("Answer2:");
+        jLabel30.setText("Answer3:");
         jPanel2.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 450, -1, -1));
 
         answer3FromTable.setBackground(new java.awt.Color(45, 68, 86));
@@ -929,12 +932,20 @@ public class TeacherHome extends javax.swing.JFrame {
                 answer3FromTableFocusLost(evt);
             }
         });
-        jPanel2.add(answer3FromTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 360, 560, 60));
+        jPanel2.add(answer3FromTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, 560, 60));
 
         jLabel31.setFont(new java.awt.Font("Lato", 3, 18)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel31.setText("Answer3:");
+        jLabel31.setText("Answer2:");
         jPanel2.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 380, -1, -1));
+
+        answerFromTable.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        answerFromTable.setForeground(new java.awt.Color(45, 68, 86));
+        answerFromTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Answer 1", "Answer 2", "Answer 3", "Answer 4" }));
+        answerFromTable.setBorder(null);
+        answerFromTable.setEnabled(false);
+        answerFromTable.setLightWeightPopupEnabled(false);
+        jPanel2.add(answerFromTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 500, 560, 60));
 
         answer4FromTable.setBackground(new java.awt.Color(45, 68, 86));
         answer4FromTable.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
@@ -993,13 +1004,20 @@ public class TeacherHome extends javax.swing.JFrame {
         listNumberOfQuestions.setOpaque(true);
         jPanel2.add(listNumberOfQuestions, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 10, 40, 20));
 
-        answerFromTable.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
-        answerFromTable.setForeground(new java.awt.Color(45, 68, 86));
-        answerFromTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Answer 1", "Answer 2", "Answer 3", "Answer 4" }));
-        answerFromTable.setBorder(null);
-        answerFromTable.setEnabled(false);
-        answerFromTable.setLightWeightPopupEnabled(false);
-        jPanel2.add(answerFromTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 500, 560, 60));
+        answerFromTableTxt.setBackground(new java.awt.Color(45, 68, 86));
+        answerFromTableTxt.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        answerFromTableTxt.setForeground(new java.awt.Color(153, 153, 153));
+        answerFromTableTxt.setText("answer");
+        answerFromTableTxt.setFocusable(false);
+        answerFromTableTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                answerFromTableTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                answerFromTableTxtFocusLost(evt);
+            }
+        });
+        jPanel2.add(answerFromTableTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 500, 560, 60));
 
         jTabbedPane1.addTab("tab3", jPanel2);
 
@@ -1011,7 +1029,7 @@ public class TeacherHome extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 579, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("tab4", jPanel3);
@@ -1267,11 +1285,12 @@ public class TeacherHome extends javax.swing.JFrame {
                         if (Question == null || ans1 == null || ans2 == null || ans3 == null || ans4 == null) {
                             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
                             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Question cant be less than 4<br> charcters and not more than 255 characters and<br>Answers can't be less than 1 character!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
-                        } //                    else if ((!ans.equals(ans1)) && (!ans.equals(ans2)) && (!ans.equals(ans3)) && (!ans.equals(ans4))) {
-                        //                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-                        //                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong answer Input! answer field must be <br>Equal at least one another field! !</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
-                        //                    } 
-                        else {
+                        } else if (ans1.equals(ans2) || ans1.equals(ans3) || ans1.equals(ans4) || ans2.equals(ans3) || ans2.equals(ans4) || ans3.equals(ans4)) {
+
+                            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input The Answers can't be simmilar!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                        } else {
                             Question = Question.charAt(Question.length() - 1) == '?' ? Question : Question.concat("?");
                             try {
                                 pst = connection.prepareStatement("insert into Questions(question,answer1,answer2,answer3,answer4,answer,testID) values(?,?,?,?,?,?,?)");
@@ -1322,10 +1341,10 @@ public class TeacherHome extends javax.swing.JFrame {
                         }
                     } else {
                         String Question = addQuestion.getText().trim().length() > 4 && !(addQuestion.getText().equals("Question")) ? addQuestion.getText().trim() : null;
-                        String ans1 = "null";
-                        String ans2 = "null";
-                        String ans3 = "null";
-                        String ans4 = "null";
+//                        String ans1 = "null";
+//                        String ans2 = "null";
+//                        String ans3 = "null";
+//                        String ans4 = "null";
                         String ans = answerTxtField.getText().trim().length() > 0 && answerTxtField.getText().trim().length() < 255 ? answerTxtField.getText() : null;
                         if (Question == null || ans == null) {
                             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
@@ -1335,10 +1354,10 @@ public class TeacherHome extends javax.swing.JFrame {
                             try {
                                 pst = connection.prepareStatement("insert into Questions(question,answer1,answer2,answer3,answer4,answer,testID) values(?,?,?,?,?,?,?)");
                                 pst.setString(1, Question.substring(0, 1).toUpperCase() + Question.substring(1));
-                                pst.setString(2, ans1);
-                                pst.setString(3, ans2);
-                                pst.setString(4, ans3);
-                                pst.setString(5, ans4);
+                                pst.setNull(2, Types.NULL);
+                                pst.setNull(3, Types.NULL);
+                                pst.setNull(4, Types.NULL);
+                                pst.setNull(5, Types.NULL);
                                 pst.setString(6, ans);
                                 pst.setInt(7, test.getupdateTestID());
 
@@ -1489,6 +1508,9 @@ public class TeacherHome extends javax.swing.JFrame {
         updateTestClearButton();
         ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
         JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Clearing Done!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+        isMCQQuesion.setSelected(false);
+        ComboBoxIsMCQ();
+
         updateTestButtons(false);
 
     }//GEN-LAST:event_updateClearBottonActionPerformed
@@ -1655,6 +1677,8 @@ public class TeacherHome extends javax.swing.JFrame {
                         ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
                         JOptionPane.showMessageDialog(this, "<html><p style=\"text-align: center;\">Test Deleted Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
                         updateTestButtons(false);
+                        isMCQQuesion.setSelected(false);
+                        ComboBoxIsMCQ();
 
                         TestTable();
                         listNumberOfQuestions.setText("0");
@@ -1714,6 +1738,9 @@ public class TeacherHome extends javax.swing.JFrame {
                         ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
                         JOptionPane.showMessageDialog(this, "<html><p style=\"text-align: center;\">Question Deleted Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
                         QuestionTable();
+                        answerFromTable.setVisible(true);
+                        answerFromTableTxt.setVisible(false);
+                        answerFromTableTxt.setFocusable(false);
                         afterRefreshQuestionTable();
 
 //                        listNumberOfQuestions.setText(test.getNumberOfQuestions() + "");
@@ -1750,6 +1777,122 @@ public class TeacherHome extends javax.swing.JFrame {
 
     private void updateQuestionFromTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateQuestionFromTableActionPerformed
         // TODO add your handling code here:
+
+        Connection connection = dbConnection.ConnectDB();
+        PreparedStatement pst;
+        if (!question.getIsMCQ()) {
+            String Question = questionFromTable.getText().trim().length() > 4 && !(questionFromTable.getText().equals("Question")) ? questionFromTable.getText().trim() : null;
+            String ans1 = answer1FromTable.getText().trim().length() > 0 && answer1FromTable.getText().trim().length() < 255 ? answer1FromTable.getText() : null;
+            String ans2 = answer2FromTable.getText().trim().length() > 0 && answer2FromTable.getText().trim().length() < 255 ? answer2FromTable.getText() : null;
+            String ans3 = answer3FromTable.getText().trim().length() > 0 && answer3FromTable.getText().trim().length() < 255 ? answer3FromTable.getText() : null;
+            String ans4 = answer4FromTable.getText().trim().length() > 0 && answer4FromTable.getText().trim().length() < 255 ? answer4FromTable.getText() : null;
+            int ans = answerFromTable.getSelectedIndex();
+            if (Question == null || ans1 == null || ans2 == null || ans3 == null || ans4 == null) {
+                ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Question cant be less than 4<br> charcters and not more than 255 characters and<br>Answers can't be less than 1 character!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
+            } else if (ans1.equals(ans2) || ans1.equals(ans3) || ans1.equals(ans4) || ans2.equals(ans3) || ans2.equals(ans4) || ans3.equals(ans4)) {
+
+                ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input The Answers can't be simmilar!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
+
+            } else {
+                Question = Question.charAt(Question.length() - 1) == '?' ? Question : Question.concat("?");
+                try {
+                    pst = connection.prepareStatement("update Questions set question = ?, answer1 = ?, answer2 = ?, answer3 = ?, answer4 = ?, answer = ? where ID = ?");
+                    pst.setString(1, Question.substring(0, 1).toUpperCase() + Question.substring(1));
+                    pst.setString(2, ans1.substring(0, 1).toUpperCase() + ans1.substring(1));
+                    pst.setString(3, ans2.substring(0, 1).toUpperCase() + ans2.substring(1));
+                    pst.setString(4, ans3.substring(0, 1).toUpperCase() + ans3.substring(1));
+                    pst.setString(5, ans4.substring(0, 1).toUpperCase() + ans4.substring(1));
+
+                    switch (ans) {
+                        case 0:
+                            pst.setString(6, "Answer 1");
+                            break;
+                        case 1:
+                            pst.setString(6, "Answer 2");
+                            break;
+                        case 2:
+                            pst.setString(6, "Answer 3");
+                            break;
+                        case 3:
+                            pst.setString(6, "Answer 4");
+                            break;
+                        default:
+                            throw new AssertionError();
+                    }
+
+                    pst.setInt(7, question.getQuestionID());
+                    int k = pst.executeUpdate();
+                    if (k == 1) {
+                        questionsClearButton();
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Question Updated Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+                        QuestionTable();
+
+//                        TestTable();
+//                        listNumberOfQuestions.setText("0");
+//                        answerFromTable.setVisible(true);
+//                        answerFromTableTxt.setVisible(false);
+//                        answerFromTableTxt.setFocusable(false);
+//                        afterRefreshQuestionTable();
+                    } else {
+                        questionsClearButton();
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Failed to Ubdate Question<br>Check the DB!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
+
+                }
+
+            }
+        } else {
+            String Question = questionFromTable.getText().trim().length() > 4 && !(questionFromTable.getText().equals("Question")) ? questionFromTable.getText().trim() : null;
+
+            String ans = answerFromTableTxt.getText().trim().length() > 0 && answerFromTableTxt.getText().trim().length() < 255 ? answerFromTableTxt.getText() : null;
+            if (Question == null || ans == null) {
+                ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input Question cant be less than 4<br> charcters and not more than 255 characters and<br>Answer can't be less than 1 character!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
+            } else {
+                Question = Question.charAt(Question.length() - 1) == '?' ? Question : Question.concat("?");
+                try {
+                    pst = connection.prepareStatement("update Questions set question = ?, answer = ? where ID = ?");
+                    pst.setString(1, Question.substring(0, 1).toUpperCase() + Question.substring(1));
+                    pst.setString(2, ans);
+                    pst.setInt(3, question.getQuestionID());
+
+                    int k = pst.executeUpdate();
+                    if (k == 1) {
+                        questionsClearButton();
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Question Updated Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+                        QuestionTable();
+//                        TestTable();
+//                        listNumberOfQuestions.setText("0");
+//                        answerFromTable.setVisible(true);
+//                        answerFromTableTxt.setVisible(false);
+//                        answerFromTableTxt.setFocusable(false);
+//                        afterRefreshQuestionTable();
+
+                    } else {
+                        questionsClearButton();
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Failed to Update Question<br>Check the DB!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
+
+                }
+
+            }
+        }
+
+
     }//GEN-LAST:event_updateQuestionFromTableActionPerformed
 
     private void TestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TestTableMouseClicked
@@ -1822,40 +1965,88 @@ public class TeacherHome extends javax.swing.JFrame {
 
     private void QuestionTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_QuestionTableMouseClicked
         // TODO add your handling code here:
-
         DefaultTableModel d1 = (DefaultTableModel) QuestionTable.getModel();
         int SelectIndex = QuestionTable.getSelectedRow();
-        question.setQuestionID(Integer.parseInt(d1.getValueAt(SelectIndex, 0).toString()));
-        question.setQuestion(d1.getValueAt(SelectIndex, 1).toString());
-        question.setAnswer1(d1.getValueAt(SelectIndex, 2).toString());
-        question.setAnswer2(d1.getValueAt(SelectIndex, 3).toString());
-        question.setAnswer3(d1.getValueAt(SelectIndex, 4).toString());
-        question.setAnswer4(d1.getValueAt(SelectIndex, 5).toString());
-        question.setAnswer(d1.getValueAt(SelectIndex, 6).toString());
+        question.IsMCQ(d1.getValueAt(SelectIndex, 2) == null && d1.getValueAt(SelectIndex, 3) == null && d1.getValueAt(SelectIndex, 4) == null && d1.getValueAt(SelectIndex, 5) == null);
+        System.out.println(question.getIsMCQ());
 
-//        System.out.println(d1.getValueAt(SelectIndex, 0).toString()+"   "+d1.getValueAt(SelectIndex, 1).toString()+"   "+ d1.getValueAt(SelectIndex, 2).toString()+"   "+ d1.getValueAt(SelectIndex, 3).toString()+"   "+ d1.getValueAt(SelectIndex, 4).toString()+"   "+ d1.getValueAt(SelectIndex, 5).toString()+"   "+"   "+ d1.getValueAt(SelectIndex, 6).toString());
-        if (SelectIndex != -1) {
-            setFromTableField(true);
-            setColorForFromTableField(Color.white);
-            questionFromTable.setText(question.getQuestion());
-            answer1FromTable.setText(question.getAnswer1());
-            answer2FromTable.setText(question.getAnswer2());
-            answer3FromTable.setText(question.getAnswer3());
-            answer4FromTable.setText(question.getAnswer4());
+        if (question.getIsMCQ()) {
+            question.setQuestionID(Integer.parseInt(d1.getValueAt(SelectIndex, 0).toString()));
+            question.setQuestion(d1.getValueAt(SelectIndex, 1).toString());
+            question.setAnswer(d1.getValueAt(SelectIndex, 6).toString());
 
-            if (question.getAnswer().equals("Answer 1")) {
-                answerFromTable.setSelectedIndex(0);
-            } else if (question.getAnswer().equals("Answer 2")) {
-                answerFromTable.setSelectedIndex(1);
+            if (SelectIndex != -1) {
+                setFromTableField(true);
+                setColorForFromTableField(Color.white);
+                questionFromTable.setText(question.getQuestion());
 
-            } else if (question.getAnswer().equals("Answer 3")) {
-                answerFromTable.setSelectedIndex(2);
+                answer1FromTable.setText("answer");
+                answer1FromTable.setEnabled(false);
+                answer2FromTable.setText("answer");
+                answer2FromTable.setEnabled(false);
+                answer3FromTable.setText("answer");
+                answer3FromTable.setEnabled(false);
+                answer4FromTable.setText("answer");
+                answer4FromTable.setEnabled(false);
 
-            } else if (question.getAnswer().equals("Answer 4")) {
-                answerFromTable.setSelectedIndex(3);
+                answerFromTable.setVisible(false);
+                answerFromTableTxt.setVisible(true);
+                answerFromTableTxt.setFocusable(true);
+                answerFromTableTxt.setForeground(Color.white);
+
+                answerFromTableTxt.setText(question.getAnswer());
             }
-        }
 
+        } else {
+
+            answerFromTable.setVisible(true);
+            answerFromTableTxt.setVisible(false);
+            answerFromTableTxt.setFocusable(false);
+            question.setQuestionID(Integer.parseInt(d1.getValueAt(SelectIndex, 0).toString()));
+            question.setQuestion(d1.getValueAt(SelectIndex, 1).toString());
+            question.setAnswer1(d1.getValueAt(SelectIndex, 2).toString());
+            question.setAnswer2(d1.getValueAt(SelectIndex, 3).toString());
+            question.setAnswer3(d1.getValueAt(SelectIndex, 4).toString());
+            question.setAnswer4(d1.getValueAt(SelectIndex, 5).toString());
+            question.setAnswer(d1.getValueAt(SelectIndex, 6).toString());
+            answer1FromTable.setEnabled(true);
+
+            answer2FromTable.setEnabled(true);
+
+            answer3FromTable.setEnabled(true);
+
+            answer4FromTable.setEnabled(true);
+
+//            System.out.println(d1.getValueAt(SelectIndex, 0).toString() + "   " + d1.getValueAt(SelectIndex, 1).toString() + "   " + d1.getValueAt(SelectIndex, 2).toString() + "   " + d1.getValueAt(SelectIndex, 3).toString() + "   " + d1.getValueAt(SelectIndex, 4).toString() + "   " + d1.getValueAt(SelectIndex, 5).toString() + "   " + "   " + d1.getValueAt(SelectIndex, 6).toString());
+            if (SelectIndex != -1) {
+                setFromTableField(true);
+                setColorForFromTableField(Color.white);
+                questionFromTable.setText(question.getQuestion());
+                answer1FromTable.setText(question.getAnswer1());
+                answer2FromTable.setText(question.getAnswer2());
+                answer3FromTable.setText(question.getAnswer3());
+                answer4FromTable.setText(question.getAnswer4());
+
+                switch (question.getAnswer()) {
+                    case "Answer 1":
+                        answerFromTable.setSelectedIndex(0);
+                        break;
+                    case "Answer 2":
+                        answerFromTable.setSelectedIndex(1);
+                        break;
+                    case "Answer 3":
+                        answerFromTable.setSelectedIndex(2);
+                        break;
+                    case "Answer 4":
+                        answerFromTable.setSelectedIndex(3);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
+//        
 
     }//GEN-LAST:event_QuestionTableMouseClicked
 
@@ -1877,30 +2068,24 @@ public class TeacherHome extends javax.swing.JFrame {
     private void isMCQQuesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isMCQQuesionActionPerformed
         // TODO add your handling code here:
 
-        if (!isMCQQuesion.isSelected()) {
-            answer1.setEnabled(false);
-            answer2.setEnabled(false);
-            answer3.setEnabled(false);
-            answer4.setEnabled(false);
-            answerTxtField.setFocusable(true);
-            answerTxtField.setVisible(true);
-            answer.setVisible(false);
-
-        } else {
-            answer1.setEnabled(true);
-            answer2.setEnabled(true);
-            answer3.setEnabled(true);
-            answer4.setEnabled(true);
-            answer1.setFocusable(true);
-            answer2.setFocusable(true);
-            answer3.setFocusable(true);
-            answer4.setFocusable(true);
-            answerTxtField.setVisible(false);
-            answer.setVisible(true);
-
-        }
+        ComboBoxIsMCQ();
 
     }//GEN-LAST:event_isMCQQuesionActionPerformed
+
+    private void answerFromTableTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_answerFromTableTxtFocusGained
+        // TODO add your handling code here:
+
+        PlaceHolderOF(answerFromTableTxt, "answer");
+
+    }//GEN-LAST:event_answerFromTableTxtFocusGained
+
+    private void answerFromTableTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_answerFromTableTxtFocusLost
+        // TODO add your handling code here:
+
+        PlaceHolderOFL(answerFromTableTxt, "answer");
+
+
+    }//GEN-LAST:event_answerFromTableTxtFocusLost
 
     /**
      * @param args the command line arguments
@@ -2020,7 +2205,6 @@ public class TeacherHome extends javax.swing.JFrame {
         newTestName.setFocusable(b);
         newTimeDuration.setFocusable(b);
         newNoOfQuestions.setFocusable(b);
-        isMCQQuesion.setSelected(false);
         isMCQQuesion.setEnabled(b);
 
     }
@@ -2059,6 +2243,31 @@ public class TeacherHome extends javax.swing.JFrame {
         setFromTableField(false);
         setColorForFromTableField(new Color(153, 153, 153));
     }
+
+    void ComboBoxIsMCQ() {
+        if (!isMCQQuesion.isSelected()) {
+            answer1.setEnabled(false);
+            answer2.setEnabled(false);
+            answer3.setEnabled(false);
+            answer4.setEnabled(false);
+            answerTxtField.setFocusable(true);
+            answerTxtField.setVisible(true);
+            answer.setVisible(false);
+
+        } else {
+            answer1.setEnabled(true);
+            answer2.setEnabled(true);
+            answer3.setEnabled(true);
+            answer4.setEnabled(true);
+            answer1.setFocusable(true);
+            answer2.setFocusable(true);
+            answer3.setFocusable(true);
+            answer4.setFocusable(true);
+            answerTxtField.setVisible(false);
+            answer.setVisible(true);
+
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Profile;
     private javax.swing.JTable QuestionTable;
@@ -2077,6 +2286,7 @@ public class TeacherHome extends javax.swing.JFrame {
     private javax.swing.JTextField answer4;
     private javax.swing.JTextField answer4FromTable;
     private javax.swing.JComboBox<String> answerFromTable;
+    private javax.swing.JTextField answerFromTableTxt;
     private javax.swing.JTextField answerTxtField;
     private javax.swing.JButton clearButton;
     private javax.swing.JButton closeApplication;

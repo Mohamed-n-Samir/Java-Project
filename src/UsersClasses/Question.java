@@ -1,11 +1,11 @@
 package UsersClasses;
 
-
+//
 public class Question {
 
 
 
-
+    
     private String Question;
     private String answer1;
     private String answer2;
@@ -13,6 +13,7 @@ public class Question {
     private String answer4;
     private String answer;
     private int QuestionID;
+    private Boolean IsMCQ;
     
     public Question(){
         
@@ -38,6 +39,10 @@ public class Question {
     public void setAnswer(String answer){
         this.answer = answer;
     }
+    public boolean getIsMCQ(){
+        return IsMCQ;
+    }
+    
     public String getQuestion(){
         return Question;
     }
@@ -58,6 +63,10 @@ public class Question {
     }
     public String getAnswer(){
         return answer;
+    }
+    
+    public void IsMCQ(boolean b){
+        IsMCQ = b;
     }
 
 
