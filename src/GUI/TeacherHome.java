@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
@@ -45,6 +46,8 @@ public class TeacherHome extends javax.swing.JFrame {
                     jLabel2.setText("Teacher");
 
                 }
+                getTeacherAllSubjects();
+
             }
         });
 
@@ -55,13 +58,13 @@ public class TeacherHome extends javax.swing.JFrame {
         try {
             Connection connection = dbConnection.getConnection();
             PreparedStatement pst;
-            pst = connection.prepareStatement("select ID,name,noOfQuestions,time from Test where teacherID = " + Teacher.getID());
+            pst = connection.prepareStatement("select ID,name,noOfQuestions,time,Subject from Test where teacherID = " + Teacher.getID());
 
             ResultSet rs = pst.executeQuery();
             ResultSetMetaData RSM = rs.getMetaData();
 
-            int c = 4;
-//            c = RSM.getColumnCount();                //use this if you use *
+            int c;
+            c = RSM.getColumnCount();
 
             DefaultTableModel DF = (DefaultTableModel) TestTable.getModel();
             DF.setRowCount(0);
@@ -73,7 +76,7 @@ public class TeacherHome extends javax.swing.JFrame {
 
             Object[] rows;
             while (rs.next()) {
-                DF.addRow(rows = new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)});
+                DF.addRow(rows = new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)});
             }
             setQuestionTableNoRow();
 //              while(rs.next()){
@@ -154,6 +157,7 @@ public class TeacherHome extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
+        Subject = new javax.swing.JComboBox<>();
         noOfQuestions = new RoundedJTextFieldTest(50);
         testDuration = new RoundedJTextFieldTest(50);
         testName = new RoundedJTextFieldTest(50);
@@ -167,6 +171,7 @@ public class TeacherHome extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         newNoOfQuestions = new RoundedJTextFieldTest(50);
@@ -358,6 +363,12 @@ public class TeacherHome extends javax.swing.JFrame {
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        Subject.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        Subject.setForeground(new java.awt.Color(45, 68, 86));
+        Subject.setBorder(null);
+        Subject.setLightWeightPopupEnabled(false);
+        jPanel4.add(Subject, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 360, 378, 80));
+
         noOfQuestions.setBackground(new java.awt.Color(45, 68, 86));
         noOfQuestions.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
         noOfQuestions.setForeground(new java.awt.Color(153, 153, 153));
@@ -425,7 +436,7 @@ public class TeacherHome extends javax.swing.JFrame {
                 addTestButtonActionPerformed(evt);
             }
         });
-        jPanel4.add(addTestButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 360, 180, 60));
+        jPanel4.add(addTestButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 460, 180, 60));
 
         clearButton.setBackground(new java.awt.Color(70, 202, 255));
         clearButton.setFont(new java.awt.Font("Lato", 2, 18)); // NOI18N
@@ -437,7 +448,7 @@ public class TeacherHome extends javax.swing.JFrame {
                 clearButtonActionPerformed(evt);
             }
         });
-        jPanel4.add(clearButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 360, 180, 60));
+        jPanel4.add(clearButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 460, 180, 60));
 
         jLabel9.setText("Note: test time can't be zero");
         jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 180, 150, -1));
@@ -453,6 +464,11 @@ public class TeacherHome extends javax.swing.JFrame {
 
         jLabel14.setText("This by defult is set to the Teacher subject!");
         jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 90, -1, -1));
+
+        jLabel35.setFont(new java.awt.Font("Lato", 3, 18)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel35.setText("Subject:");
+        jPanel4.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 390, 70, -1));
 
         jTabbedPane1.addTab("tab1", jPanel4);
 
@@ -1144,20 +1160,22 @@ public class TeacherHome extends javax.swing.JFrame {
 
         if (LoggedIn()) {
 
-            String testN = "TestName".equals(testName.getText()) ? Teacher.getSubject() : testName.getText();
+            String testN = testName.getText().trim().equals("TestName") || testName.getText().trim().equals("") ? Subject.getSelectedItem().toString() : testName.getText();
             int testTime;
             int noOfQuestionsi;
             try {
                 testTime = Integer.parseInt(testDuration.getText()) > 0 ? Integer.parseInt(testDuration.getText()) : 10;
                 noOfQuestionsi = Integer.parseInt(noOfQuestions.getText()) > 0 && Integer.parseInt(noOfQuestions.getText()) <= 60 ? Integer.parseInt(noOfQuestions.getText()) : 10;
 
-                Connection connection = dbConnection.ConnectDB();
                 try {
-                    PreparedStatement pst = connection.prepareStatement("insert into Test(name,teacherID,noOfQuestions,time) values(?,?,?,?)");
+                    Connection connection = dbConnection.ConnectDB();
+                    PreparedStatement pst = connection.prepareStatement("insert into Test(name,teacherID,noOfQuestions,time,subject) values(?,?,?,?,?)");
                     pst.setString(1, testN);
                     pst.setInt(2, Teacher.getID());
                     pst.setInt(3, noOfQuestionsi);
                     pst.setInt(4, testTime);
+                    pst.setString(5, Subject.getSelectedItem().toString());
+
                     int k = pst.executeUpdate();
                     if (k == 1) {
                         addTestClearButton();
@@ -1505,11 +1523,15 @@ public class TeacherHome extends javax.swing.JFrame {
         // TODO add your handling code here:
         testID.setFocusable(true);
         updateTestButtons(true);
+
         updateTestClearButton();
-        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
-        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Clearing Done!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+        questionsClearButton();
         isMCQQuesion.setSelected(false);
         ComboBoxIsMCQ();
+        answerTxtField.requestFocus();
+        
+        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
+        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Clearing Done!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
 
         updateTestButtons(false);
 
@@ -2146,6 +2168,7 @@ public class TeacherHome extends javax.swing.JFrame {
     }
 
     void questionsClearButton() {
+        answer.setSelectedIndex(0);
         addQuestion.setText("");
         answer1.setText("");
         answer2.setText("");
@@ -2159,7 +2182,6 @@ public class TeacherHome extends javax.swing.JFrame {
         answerTxtField.requestFocus();
         addQuestion.requestFocus();
         addQuestion.setForeground(Color.white);
-        answer.setSelectedIndex(0);
     }
 
     void updateTestClearButton() {
@@ -2268,9 +2290,50 @@ public class TeacherHome extends javax.swing.JFrame {
 
         }
     }
+
+    void getTeacherAllSubjects() {
+        Connection connection = dbConnection.ConnectDB();
+        try {
+            PreparedStatement pt = connection.prepareStatement("select subject1,subject2,subject3 from Teacher where ID = " + Teacher.getID());
+            ResultSet rs = pt.executeQuery();
+
+            rs.next();
+
+            String sub1 = rs.getString(1);
+            String sub2 = rs.getString(2);
+            String sub3 = rs.getString(3);
+
+            Object[] rows;
+            if (sub1 != null && sub2 == null && sub3 == null) {
+                rows = new Object[]{sub1};
+            } else if (sub1 == null && sub2 != null && sub3 == null) {
+                rows = new Object[]{sub2};
+            } else if (sub1 == null && sub2 == null && sub3 != null) {
+                rows = new Object[]{sub3};
+            } else if (sub1 != null && sub2 == null && sub3 != null) {
+                rows = new Object[]{sub1, sub3};
+            } else if (sub1 == null && sub2 != null && sub3 != null) {
+                rows = new Object[]{sub2, sub3};
+            } else if (sub1 != null && sub2 != null && sub3 == null) {
+                rows = new Object[]{sub1, sub2};
+            } else if (sub1 != null && sub2 != null && sub3 != null) {
+                rows = new Object[]{sub1, sub2, sub3};
+            } else {
+                rows = new Object[]{"NONE"};
+            }
+
+            Subject.setModel(new javax.swing.DefaultComboBoxModel(rows));
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Profile;
     private javax.swing.JTable QuestionTable;
+    private javax.swing.JComboBox<String> Subject;
     private javax.swing.JTable TestTable;
     private javax.swing.JTextField addQuestion;
     private javax.swing.JButton addQuestionButton;
@@ -2314,6 +2377,7 @@ public class TeacherHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
