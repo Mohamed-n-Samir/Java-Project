@@ -274,6 +274,10 @@ public class MainApplication extends javax.swing.JFrame {
 
     private void StudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentButtonActionPerformed
         // TODO add your handling code here:
+        
+        setVisible(false);
+        new StudentLogin().setVisible(true);
+        
     }//GEN-LAST:event_StudentButtonActionPerformed
 
     private void AdminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminButtonActionPerformed

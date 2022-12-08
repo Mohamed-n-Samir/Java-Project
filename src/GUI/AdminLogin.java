@@ -117,7 +117,7 @@ public class AdminLogin extends javax.swing.JFrame {
 
         getContentPane().add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(258, 154, -1, -1));
 
-        txtAdminUserName.setBackground(new java.awt.Color(33, 191, 255));
+        txtAdminUserName.setBackground(new java.awt.Color(45, 68, 86));
         txtAdminUserName.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
         txtAdminUserName.setForeground(new java.awt.Color(102, 102, 102));
         txtAdminUserName.setText("Enter Username");
@@ -131,7 +131,7 @@ public class AdminLogin extends javax.swing.JFrame {
         });
         getContentPane().add(txtAdminUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 350, 70));
 
-        pwdAdmin.setBackground(new java.awt.Color(33, 191, 255));
+        pwdAdmin.setBackground(new java.awt.Color(45, 68, 86));
         pwdAdmin.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
         pwdAdmin.setForeground(new java.awt.Color(102, 102, 102));
         pwdAdmin.setText("Password");
@@ -166,12 +166,13 @@ public class AdminLogin extends javax.swing.JFrame {
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
         loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sign-in.png"))); // NOI18N
         loginButton.setText("Log-In");
+        loginButton.setIconTextGap(15);
         loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 500, 100, 50));
+        getContentPane().add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 500, 130, 50));
 
         goBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Group 16.png"))); // NOI18N
         goBackButton.setBorder(null);

@@ -1,6 +1,7 @@
 package GUI;
 
 import CustomComponent.RoundedJTextFieldTest;
+import CustomComponent.ReadField;
 import ProjectApplication.DbConnection;
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D;
@@ -226,6 +227,20 @@ public class TeacherHome extends javax.swing.JFrame {
         listNumberOfQuestions = new javax.swing.JLabel();
         answerFromTableTxt = new RoundedJTextFieldTest(50);
         jPanel3 = new javax.swing.JPanel();
+        TeacherID = new CustomComponent.ReadField(50);
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        TeacherName = new CustomComponent.ReadField(50);
+        jLabel5 = new javax.swing.JLabel();
+        TeacherEmail = new CustomComponent.ReadField(50);
+        jLabel13 = new javax.swing.JLabel();
+        TeacherSubject1 = new CustomComponent.ReadField(50);
+        jLabel25 = new javax.swing.JLabel();
+        TeacherSubject2 = new CustomComponent.ReadField(50);
+        jLabel26 = new javax.swing.JLabel();
+        TeacherSubject3 = new CustomComponent.ReadField(50);
+        TeacherUpdateInfo = new javax.swing.JButton();
+        TeacherReportStudent = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -1037,16 +1052,168 @@ public class TeacherHome extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab3", jPanel2);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1580, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
-        );
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        TeacherID.setBackground(new java.awt.Color(45, 68, 86));
+        TeacherID.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        TeacherID.setForeground(new java.awt.Color(255, 255, 255));
+        TeacherID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TeacherID.setText("TeacherID");
+        TeacherID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TeacherID.setFocusable(false);
+        TeacherID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TeacherIDFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TeacherIDFocusLost(evt);
+            }
+        });
+        jPanel3.add(TeacherID, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 380, 60));
+
+        jLabel1.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(45, 68, 86));
+        jLabel1.setText("ID");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(45, 68, 86));
+        jLabel3.setText("Name");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 60, 50, -1));
+
+        TeacherName.setBackground(new java.awt.Color(45, 68, 86));
+        TeacherName.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        TeacherName.setForeground(new java.awt.Color(255, 255, 255));
+        TeacherName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TeacherName.setText("Name");
+        TeacherName.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TeacherName.setFocusable(false);
+        TeacherName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TeacherNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TeacherNameFocusLost(evt);
+            }
+        });
+        jPanel3.add(TeacherName, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 80, 380, 60));
+
+        jLabel5.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(45, 68, 86));
+        jLabel5.setText("Email");
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 60, 40, -1));
+
+        TeacherEmail.setBackground(new java.awt.Color(45, 68, 86));
+        TeacherEmail.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        TeacherEmail.setForeground(new java.awt.Color(255, 255, 255));
+        TeacherEmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TeacherEmail.setText("Email");
+        TeacherEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TeacherEmail.setFocusable(false);
+        TeacherEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TeacherEmailFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TeacherEmailFocusLost(evt);
+            }
+        });
+        jPanel3.add(TeacherEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 80, 380, 60));
+
+        jLabel13.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(45, 68, 86));
+        jLabel13.setText("Subject1");
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, -1, -1));
+
+        TeacherSubject1.setBackground(new java.awt.Color(45, 68, 86));
+        TeacherSubject1.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        TeacherSubject1.setForeground(new java.awt.Color(255, 255, 255));
+        TeacherSubject1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TeacherSubject1.setText("Subject1");
+        TeacherSubject1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TeacherSubject1.setFocusable(false);
+        TeacherSubject1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TeacherSubject1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TeacherSubject1FocusLost(evt);
+            }
+        });
+        jPanel3.add(TeacherSubject1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 380, 60));
+
+        jLabel25.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(45, 68, 86));
+        jLabel25.setText("Subject2");
+        jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 150, 60, -1));
+
+        TeacherSubject2.setBackground(new java.awt.Color(45, 68, 86));
+        TeacherSubject2.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        TeacherSubject2.setForeground(new java.awt.Color(255, 255, 255));
+        TeacherSubject2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TeacherSubject2.setText("Subject2");
+        TeacherSubject2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TeacherSubject2.setFocusable(false);
+        TeacherSubject2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TeacherSubject2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TeacherSubject2FocusLost(evt);
+            }
+        });
+        jPanel3.add(TeacherSubject2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 170, 380, 60));
+
+        jLabel26.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(45, 68, 86));
+        jLabel26.setText("Subject3");
+        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 150, 60, -1));
+
+        TeacherSubject3.setBackground(new java.awt.Color(45, 68, 86));
+        TeacherSubject3.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        TeacherSubject3.setForeground(new java.awt.Color(255, 255, 255));
+        TeacherSubject3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TeacherSubject3.setText("Subject3");
+        TeacherSubject3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TeacherSubject3.setFocusable(false);
+        TeacherSubject3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TeacherSubject3FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TeacherSubject3FocusLost(evt);
+            }
+        });
+        TeacherSubject3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TeacherSubject3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(TeacherSubject3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 170, 380, 60));
+
+        TeacherUpdateInfo.setBackground(new java.awt.Color(70, 202, 255));
+        TeacherUpdateInfo.setFont(new java.awt.Font("Lato", 2, 18)); // NOI18N
+        TeacherUpdateInfo.setForeground(new java.awt.Color(255, 255, 255));
+        TeacherUpdateInfo.setText("Update Info");
+        TeacherUpdateInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TeacherUpdateInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TeacherUpdateInfoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(TeacherUpdateInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 470, 180, 60));
+
+        TeacherReportStudent.setBackground(new java.awt.Color(255, 71, 71));
+        TeacherReportStudent.setFont(new java.awt.Font("Lato", 2, 18)); // NOI18N
+        TeacherReportStudent.setForeground(new java.awt.Color(255, 255, 255));
+        TeacherReportStudent.setText("Report Student");
+        TeacherReportStudent.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TeacherReportStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TeacherReportStudentActionPerformed(evt);
+            }
+        });
+        jPanel3.add(TeacherReportStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 470, 180, 60));
 
         jTabbedPane1.addTab("tab4", jPanel3);
 
@@ -1529,7 +1696,7 @@ public class TeacherHome extends javax.swing.JFrame {
         isMCQQuesion.setSelected(false);
         ComboBoxIsMCQ();
         answerTxtField.requestFocus();
-        
+
         ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
         JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Clearing Done!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
 
@@ -1990,7 +2157,7 @@ public class TeacherHome extends javax.swing.JFrame {
         DefaultTableModel d1 = (DefaultTableModel) QuestionTable.getModel();
         int SelectIndex = QuestionTable.getSelectedRow();
         question.IsMCQ(d1.getValueAt(SelectIndex, 2) == null && d1.getValueAt(SelectIndex, 3) == null && d1.getValueAt(SelectIndex, 4) == null && d1.getValueAt(SelectIndex, 5) == null);
-        System.out.println(question.getIsMCQ());
+//        System.out.println(question.getIsMCQ());
 
         if (question.getIsMCQ()) {
             question.setQuestionID(Integer.parseInt(d1.getValueAt(SelectIndex, 0).toString()));
@@ -2108,6 +2275,69 @@ public class TeacherHome extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_answerFromTableTxtFocusLost
+
+    private void TeacherIDFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherIDFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherIDFocusGained
+
+    private void TeacherIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherIDFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherIDFocusLost
+
+    private void TeacherNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherNameFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherNameFocusGained
+
+    private void TeacherNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherNameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherNameFocusLost
+
+    private void TeacherEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherEmailFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherEmailFocusGained
+
+    private void TeacherEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherEmailFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherEmailFocusLost
+
+    private void TeacherSubject1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherSubject1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherSubject1FocusGained
+
+    private void TeacherSubject1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherSubject1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherSubject1FocusLost
+
+    private void TeacherSubject2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherSubject2FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherSubject2FocusGained
+
+    private void TeacherSubject2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherSubject2FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherSubject2FocusLost
+
+    private void TeacherSubject3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherSubject3FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherSubject3FocusGained
+
+    private void TeacherSubject3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TeacherSubject3FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherSubject3FocusLost
+
+    private void TeacherSubject3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeacherSubject3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherSubject3ActionPerformed
+
+    private void TeacherUpdateInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeacherUpdateInfoActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        new TeacherUpdateInfoPanal().setVisible(true);
+
+    }//GEN-LAST:event_TeacherUpdateInfoActionPerformed
+
+    private void TeacherReportStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeacherReportStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TeacherReportStudentActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2292,48 +2522,52 @@ public class TeacherHome extends javax.swing.JFrame {
     }
 
     void getTeacherAllSubjects() {
-        Connection connection = dbConnection.ConnectDB();
-        try {
-            PreparedStatement pt = connection.prepareStatement("select subject1,subject2,subject3 from Teacher where ID = " + Teacher.getID());
-            ResultSet rs = pt.executeQuery();
 
-            rs.next();
+        String[] subjects = {Teacher.getSubject1(), Teacher.getSubject2(), Teacher.getSubject3()};
+//        System.out.println(Arrays.toString(subjects));
 
-            String sub1 = rs.getString(1);
-            String sub2 = rs.getString(2);
-            String sub3 = rs.getString(3);
-
-            Object[] rows;
-            if (sub1 != null && sub2 == null && sub3 == null) {
-                rows = new Object[]{sub1};
-            } else if (sub1 == null && sub2 != null && sub3 == null) {
-                rows = new Object[]{sub2};
-            } else if (sub1 == null && sub2 == null && sub3 != null) {
-                rows = new Object[]{sub3};
-            } else if (sub1 != null && sub2 == null && sub3 != null) {
-                rows = new Object[]{sub1, sub3};
-            } else if (sub1 == null && sub2 != null && sub3 != null) {
-                rows = new Object[]{sub2, sub3};
-            } else if (sub1 != null && sub2 != null && sub3 == null) {
-                rows = new Object[]{sub1, sub2};
-            } else if (sub1 != null && sub2 != null && sub3 != null) {
-                rows = new Object[]{sub1, sub2, sub3};
-            } else {
-                rows = new Object[]{"NONE"};
-            }
-
-            Subject.setModel(new javax.swing.DefaultComboBoxModel(rows));
-
-        } catch (SQLException ex) {
-
-            Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
+        Object[] rows;
+        if (subjects[0] != null && subjects[1] == null && subjects[2] == null) {
+            rows = new Object[]{subjects[0]};
+        } else if (subjects[0] == null && subjects[1] != null && subjects[2] == null) {
+            rows = new Object[]{subjects[1]};
+        } else if (subjects[0] == null && subjects[1] == null && subjects[2] != null) {
+            rows = new Object[]{subjects[2]};
+        } else if (subjects[0] != null && subjects[1] == null && subjects[2] != null) {
+            rows = new Object[]{subjects[0], subjects[2]};
+        } else if (subjects[0] == null && subjects[1] != null && subjects[2] != null) {
+            rows = new Object[]{subjects[1], subjects[2]};
+        } else if (subjects[0] != null && subjects[1] != null && subjects[2] == null) {
+            rows = new Object[]{subjects[0], subjects[1]};
+        } else if (subjects[0] != null && subjects[1] != null && subjects[2] != null) {
+            rows = new Object[]{subjects[0], subjects[1], subjects[2]};
+        } else {
+            rows = new Object[]{"NONE"};
         }
+
+        Subject.setModel(new javax.swing.DefaultComboBoxModel(rows));
+        TeacherSubject1.setText(subjects[0] == null ? "NONE" : subjects[0]);
+        TeacherSubject2.setText(subjects[1] == null ? "NONE" : subjects[1]);
+        TeacherSubject3.setText(subjects[2] == null ? "NONE" : subjects[2]);
+        TeacherID.setText(Teacher.getID() + "");
+        TeacherName.setText(Teacher.getName());
+        TeacherID.setText(Teacher.getID() + "");
+        TeacherEmail.setText(Teacher.getEmail());
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Profile;
     private javax.swing.JTable QuestionTable;
     private javax.swing.JComboBox<String> Subject;
+    private javax.swing.JTextField TeacherEmail;
+    private javax.swing.JTextField TeacherID;
+    private javax.swing.JTextField TeacherName;
+    private javax.swing.JButton TeacherReportStudent;
+    private javax.swing.JTextField TeacherSubject1;
+    private javax.swing.JTextField TeacherSubject2;
+    private javax.swing.JTextField TeacherSubject3;
+    private javax.swing.JButton TeacherUpdateInfo;
     private javax.swing.JTable TestTable;
     private javax.swing.JTextField addQuestion;
     private javax.swing.JButton addQuestionButton;
@@ -2356,9 +2590,11 @@ public class TeacherHome extends javax.swing.JFrame {
     private javax.swing.JButton deleteQuestionFromTable;
     private javax.swing.JButton goBackButton;
     private javax.swing.JCheckBox isMCQQuesion;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -2371,7 +2607,10 @@ public class TeacherHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -2379,6 +2618,7 @@ public class TeacherHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
