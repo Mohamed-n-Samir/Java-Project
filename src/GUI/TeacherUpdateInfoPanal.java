@@ -354,6 +354,14 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
         String newPasswordRewrite = !UpdatepwdTeacherRewrite.getText().trim().equals("New Password") ? UpdatepwdTeacherRewrite.getText().trim() : "";
         newPasswordRewrite = UpdatepwdTeacherRewrite.getText().trim().length() > 5 ? newPasswordRewrite : "wrong Password";
 
+        String sub1 = UpdateSubject1.getSelectedItem().toString().equals("Default".trim()) ? Teacher.getSubject1() == null ? "NONE" : Teacher.getSubject1() : UpdateSubject1.getSelectedItem().toString();
+        String sub2 = UpdateSubject2.getSelectedItem().toString().equals("Default".trim()) ? Teacher.getSubject2() == null ? "NONE" : Teacher.getSubject2() : UpdateSubject2.getSelectedItem().toString();
+        String sub3 = UpdateSubject3.getSelectedItem().toString().equals("Default".trim()) ? Teacher.getSubject3() == null ? "NONE" : Teacher.getSubject3() : UpdateSubject3.getSelectedItem().toString();
+
+        System.out.println(sub1);
+        System.out.println(sub2);
+        System.out.println(sub3);
+
         boolean cheak = true;
 
         if (newName.equals("")) {
@@ -384,8 +392,16 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
             cheak = false;
         }
 
+        if (sub1.equals(sub2) && sub2.equals(sub3)) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Subject Fields make sure that<br>the 3 subjects are diffrent or not equal none<br> if you need to leave the subject as it is leave it as Default!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            cheak = false;
+        }
         if (cheak) {
+            System.out.println("aaaaaa");
+
             try {
+                boolean emailCheck = true;
                 Connection connection = dbConnection.ConnectDB();
                 PreparedStatement pst;
                 pst = connection.prepareStatement("Select email from Teacher");
@@ -394,11 +410,61 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
 
                 while (rs.next()) {
                     if (newEmail.equals(rs.getString(1))) {
+                        emailCheck = false;
                         ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">This Email is already been taken!<br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">This Email is already been taken!<br>if you need to leave the Email as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
                     }
 
 //                System.out.println(Arrays.toString(rows));
+                }
+
+                if (emailCheck) {
+                    if (newEmail.equals("Change Email")) {
+                        newEmail = Teacher.getEmail();
+                    }
+                    pst = connection.prepareStatement("update Teacher set email = ?, name = ?, password = ?, subject1 = ?, subject2 = ?, subject3 = ? where ID = ?");
+                    pst.setString(1, newEmail);
+                    Teacher.setEmail(newEmail);
+                    pst.setString(2, newName);
+                    Teacher.setName(newName);
+                    if (newPassword.equals("")) {
+                        pst.setString(3,Teacher.getPassword());
+                    } else {
+                        pst.setString(3, newPassword);
+                        Teacher.setPassword(newPassword);
+                    }
+
+                    if (sub1.equals("NONE")) {
+                        pst.setNull(4, Types.NVARCHAR);
+                        Teacher.setSub1(sub1);
+                    } else {
+                        pst.setString(4, sub1.trim());
+                        Teacher.setSub1(sub1);
+                    }
+
+                    if (sub2.equals("NONE")) {
+                        pst.setNull(5, Types.NVARCHAR);
+                        Teacher.setSub2(sub2);
+                    } else {
+                        pst.setString(5, sub2.trim());
+                        Teacher.setSub2(sub2);
+                    }
+
+                    if (sub3.equals("NONE")) {
+                        pst.setNull(6, Types.NVARCHAR);
+                        Teacher.setSub3(sub3);
+                    } else {
+                        pst.setString(6, sub3.trim());
+                        Teacher.setSub3(sub3);
+                    }
+
+                    pst.setInt(7, Teacher.getID());
+                    int k = pst.executeUpdate();
+                    if (k == 1) {
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">en taken!<br>Update Done Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                    }
                 }
 
             } catch (SQLException ex) {

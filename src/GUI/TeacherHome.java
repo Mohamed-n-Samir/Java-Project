@@ -1,7 +1,6 @@
 package GUI;
 
 import CustomComponent.RoundedJTextFieldTest;
-import CustomComponent.ReadField;
 import ProjectApplication.DbConnection;
 import java.awt.Color;
 import java.awt.geom.RoundRectangle2D;
@@ -17,7 +16,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;

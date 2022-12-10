@@ -329,7 +329,7 @@ public class TeacherLogin extends javax.swing.JFrame {
                     new TeacherHome().setVisible(true);
                     found = true;
                     Teacher teacher;
-                    teacher = new Teacher(rs.getInt("ID"),rs.getString("name"),rs.getString("subject1"),rs.getString("subject2"),rs.getString("subject3"),rs.getString("email"));
+                    teacher = new Teacher(rs.getInt("ID"),rs.getString("name"),rs.getString("subject1"),rs.getString("subject2"),rs.getString("subject3"),rs.getString("email"),rs.getString("password"));
                 }
             }
 
