@@ -324,7 +324,7 @@ public class TeacherLogin extends javax.swing.JFrame {
             boolean found = false;
 
             while (rs.next()) {
-                if (rs.getString(3).equals(txtTeacherUserName.getText()) && rs.getString(2).equals(pwdTeacher.getText())) {
+                if (rs.getString(3).toLowerCase().equals(txtTeacherUserName.getText().toLowerCase()) && rs.getString(2).equals(pwdTeacher.getText())) {
                     setVisible(false);
                     new TeacherHome().setVisible(true);
                     found = true;

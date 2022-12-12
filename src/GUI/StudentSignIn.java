@@ -528,7 +528,7 @@ public class StudentSignIn extends javax.swing.JFrame {
                 ResultSet rs = pst.executeQuery();
 
                 while (rs.next()) {
-                    if (sdEmail.equals(rs.getString(1)) || sdPhone.equals(rs.getString(2))) {
+                    if (sdEmail.toLowerCase().equals(rs.getString(1)) || sdPhone.equals(rs.getString(2))) {
                         emailCheck = false;
                         ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
                         JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">This Email or Phone Number is already been taken!<br></p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
@@ -541,7 +541,7 @@ public class StudentSignIn extends javax.swing.JFrame {
 
                     pst = connection.prepareStatement("insert into Students(name,email,password,subject1,subject2,subject3,phone,age) values(?,?,?,?,?,?,?,?)");
                     pst.setString(1, sdName);
-                    pst.setString(2, sdEmail);
+                    pst.setString(2, sdEmail.toLowerCase());
                     pst.setString(3, sdPassword);
 
                     if (sub1.equals("NONE")) {

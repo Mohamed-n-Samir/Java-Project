@@ -332,10 +332,10 @@ public class StudentLogin extends javax.swing.JFrame {
             boolean found = false;
 
             while (rs.next()) {
-                if (rs.getString("email").equals(StudnetEmail.getText()) && rs.getString("password").equals(pwdStudent.getText())) {
+                if (rs.getString("email").toLowerCase().equals(StudnetEmail.getText().trim().toLowerCase()) && rs.getString("password").equals(pwdStudent.getText().trim().toLowerCase())) {
                     found = true;
                     Student student;
-                    student = new Student(rs.getInt("ID"), rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getInt("age"), rs.getString("subject1"), rs.getString("subject2"), rs.getString("subject3"));
+                    student = new Student(rs.getInt("ID"), rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getInt("age"), rs.getString("subject1"), rs.getString("subject2"), rs.getString("subject3"),rs.getString("Password"));
                     setVisible(false);
                     new StudentHome().setVisible(true);
                 }

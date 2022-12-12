@@ -2,32 +2,30 @@ package GUI;
 
 import CustomComponent.PasswordField;
 import CustomComponent.RoundedJTextFieldTest;
-import static GUI.TeacherHome.LoggedIn;
+import ProjectApplication.DbConnection;
+import UsersClasses.Student;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
+//import java.lang.System.Logger;
+//import java.lang.System.Logger.Level;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import ProjectApplication.*;
-import java.util.Arrays;
-import UsersClasses.Teacher;
 
-public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
+public class StudentUpdateInfoPanal extends javax.swing.JFrame {
 
     DbConnection dbConnection = new DbConnection();
 
-    public TeacherUpdateInfoPanal() {
+    public StudentUpdateInfoPanal() {
         initComponents();
-        getContentPane().setBackground(Color.white);
-        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 15, 15));
+        getContentPane().setBackground(Color.white);                                                 // set new background color
+        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 15, 15)); // make rounded corners
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
-                getSubjects();
+
             }
         });
     }
@@ -47,18 +45,14 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
         UpdateTeacherButton = new javax.swing.JButton();
         UpdatepwdTeacherRewrite = new PasswordField(50);
         UpdateEmail = new RoundedJTextFieldTest(50);
-        UpdateSubject1 = new javax.swing.JComboBox<>();
-        jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
-        UpdateSubject2 = new javax.swing.JComboBox<>();
-        jLabel37 = new javax.swing.JLabel();
-        UpdateSubject3 = new javax.swing.JComboBox<>();
         goBackButton = new javax.swing.JButton();
+        updateAge = new RoundedJTextFieldTest(50);
+        updatePhoneNumber = new RoundedJTextFieldTest(50);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(600, 750));
+        setMinimumSize(new java.awt.Dimension(600, 780));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(600, 750));
+        setPreferredSize(new java.awt.Dimension(600, 780));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel5.setBackground(new java.awt.Color(0, 0, 0));
@@ -97,14 +91,14 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
 
         getContentPane().add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, -1, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/teacher (2).png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/student (1)_1.png"))); // NOI18N
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Lato", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(45, 68, 86));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Teacher");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 290, -1));
+        jLabel2.setText("Student");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 280, -1));
 
         closeApplication.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/close (1).png"))); // NOI18N
         closeApplication.setBorder(null);
@@ -165,7 +159,7 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
                 boxShowPwdActionPerformed(evt);
             }
         });
-        getContentPane().add(boxShowPwd, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 410, -1, -1));
+        getContentPane().add(boxShowPwd, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 410, -1, -1));
 
         UpdateTeacherButton.setBackground(new java.awt.Color(12, 69, 92));
         UpdateTeacherButton.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
@@ -177,7 +171,7 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
                 UpdateTeacherButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(UpdateTeacherButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 640, 150, 60));
+        getContentPane().add(UpdateTeacherButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 700, 150, 60));
 
         UpdatepwdTeacherRewrite.setBackground(new java.awt.Color(45, 68, 86));
         UpdatepwdTeacherRewrite.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
@@ -218,39 +212,6 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
         });
         getContentPane().add(UpdateEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, 470, 70));
 
-        UpdateSubject1.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
-        UpdateSubject1.setForeground(new java.awt.Color(45, 68, 86));
-        UpdateSubject1.setBorder(null);
-        UpdateSubject1.setLightWeightPopupEnabled(false);
-        getContentPane().add(UpdateSubject1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 560, 150, 60));
-
-        jLabel35.setFont(new java.awt.Font("Lato", 3, 18)); // NOI18N
-        jLabel35.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel35.setText("Subject1:");
-        getContentPane().add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, -1));
-
-        jLabel36.setFont(new java.awt.Font("Lato", 3, 18)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel36.setText("Subject2:");
-        getContentPane().add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 530, -1, -1));
-
-        UpdateSubject2.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
-        UpdateSubject2.setForeground(new java.awt.Color(45, 68, 86));
-        UpdateSubject2.setBorder(null);
-        UpdateSubject2.setLightWeightPopupEnabled(false);
-        getContentPane().add(UpdateSubject2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 560, 150, 60));
-
-        jLabel37.setFont(new java.awt.Font("Lato", 3, 18)); // NOI18N
-        jLabel37.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel37.setText("Subject3:");
-        getContentPane().add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 530, -1, -1));
-
-        UpdateSubject3.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
-        UpdateSubject3.setForeground(new java.awt.Color(45, 68, 86));
-        UpdateSubject3.setBorder(null);
-        UpdateSubject3.setLightWeightPopupEnabled(false);
-        getContentPane().add(UpdateSubject3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 560, 150, 60));
-
         goBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Group 16.png"))); // NOI18N
         goBackButton.setBorder(null);
         goBackButton.setBorderPainted(false);
@@ -263,6 +224,44 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(goBackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 40, 40));
+
+        updateAge.setBackground(new java.awt.Color(45, 68, 86));
+        updateAge.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        updateAge.setForeground(new java.awt.Color(102, 102, 102));
+        updateAge.setText("Change Age");
+        updateAge.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                updateAgeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                updateAgeFocusLost(evt);
+            }
+        });
+        updateAge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateAgeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(updateAge, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 520, 470, 70));
+
+        updatePhoneNumber.setBackground(new java.awt.Color(45, 68, 86));
+        updatePhoneNumber.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        updatePhoneNumber.setForeground(new java.awt.Color(102, 102, 102));
+        updatePhoneNumber.setText("Change PhoneNumber");
+        updatePhoneNumber.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                updatePhoneNumberFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                updatePhoneNumberFocusLost(evt);
+            }
+        });
+        updatePhoneNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePhoneNumberActionPerformed(evt);
+            }
+        });
+        getContentPane().add(updatePhoneNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 600, 470, 70));
 
         pack();
         setLocationRelativeTo(null);
@@ -295,6 +294,10 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
             UpdateName.setForeground(new Color(102, 102, 102));
         }
     }//GEN-LAST:event_UpdateNameFocusLost
+
+    private void UpdateNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UpdateNameActionPerformed
 
     private void UpdatepwdTeacherFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UpdatepwdTeacherFocusGained
         // TODO add your handling code here:
@@ -355,18 +358,12 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
         String newPasswordRewrite = !UpdatepwdTeacherRewrite.getText().trim().equals("New Password") ? UpdatepwdTeacherRewrite.getText().trim() : "";
         newPasswordRewrite = UpdatepwdTeacherRewrite.getText().trim().length() > 5 ? newPasswordRewrite : "wrong Password";
 
-        String sub1 = UpdateSubject1.getSelectedItem().toString().equals("Default".trim()) ? Teacher.getSubject1() == null ? "NONE" : Teacher.getSubject1() : UpdateSubject1.getSelectedItem().toString();
-        String sub2 = UpdateSubject2.getSelectedItem().toString().equals("Default".trim()) ? Teacher.getSubject2() == null ? "NONE" : Teacher.getSubject2() : UpdateSubject2.getSelectedItem().toString();
-        String sub3 = UpdateSubject3.getSelectedItem().toString().equals("Default".trim()) ? Teacher.getSubject3() == null ? "NONE" : Teacher.getSubject3() : UpdateSubject3.getSelectedItem().toString();
-
-        System.out.println(sub1);
-        System.out.println(sub2);
-        System.out.println(sub3);
+        String phoneNum = updatePhoneNumber.getText().trim().equals("Change PhoneNumber") ? Student.getPhoneNumber() : updatePhoneNumber.getText().trim().matches("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$") ? updatePhoneNumber.getText().trim() : "wrong input";
 
         boolean cheak = true;
 
         if (newName.equals("")) {
-            newName = Teacher.getName();
+            newName = Student.getName();
 
         }
         if (newName.equals("wrong input")) {
@@ -393,91 +390,93 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
             cheak = false;
         }
 
-        if (sub1.equals(sub2) && sub2.equals(sub3)) {
+        int sdAge = -1;
+        int sdAge2 = Student.getAge();
+
+        try {
+            sdAge = updateAge.getText().trim().equals("Change Age") ? sdAge2 : (Integer.parseInt(updateAge.getText()) >= 17 && Integer.parseInt(updateAge.getText()) <= 24) ? Integer.parseInt(updateAge.getText()) : -1;
+        } catch (NumberFormatException ex) {
+            cheak = false;
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Subject Fields make sure that<br>the 3 subjects are diffrent or not equal none<br> if you need to leave the subject as it is leave it as Default!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Enter Correct integar Number<br> More than 16 and less than 24!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
+        }
+
+        if (sdAge == -1) {
+            cheak = false;
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Enter Correct integar Number<br> More than 16 and less than 24!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
+        }
+
+        if (phoneNum.equals("wrong input")) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the phone Field make sure that<br>you enterd a correct phone format as<br>123-456-7890\n"
+                    + "(123) 456-7890\n"
+                    + "123 456 7890\n"
+                    + "123.456.7890\n"
+                    + "+91 (123) 456-7890</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
         }
+
         if (cheak) {
-            System.out.println("aaaaaa");
 
             try {
                 boolean emailCheck = true;
                 Connection connection = dbConnection.ConnectDB();
                 PreparedStatement pst;
-                pst = connection.prepareStatement("Select email from Teacher");
+                pst = connection.prepareStatement("Select email from Students");
 
                 ResultSet rs = pst.executeQuery();
 
                 while (rs.next()) {
-                    if (newEmail.toLowerCase().equals(rs.getString(1))) {
+                    if (newEmail.toLowerCase().equals(rs.getString(1).toLowerCase())) {
                         emailCheck = false;
                         ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
                         JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">This Email is already been taken!<br>if you need to leave the Email as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
                     }
 
-//                System.out.println(Arrays.toString(rows));
+                    //                System.out.println(Arrays.toString(rows));
                 }
 
                 if (emailCheck) {
                     if (newEmail.equals("Change Email")) {
-                        newEmail = Teacher.getEmail();
+                        newEmail = Student.getEmail();
                     }
-                    pst = connection.prepareStatement("update Teacher set email = ?, name = ?, password = ?, subject1 = ?, subject2 = ?, subject3 = ? where ID = ?");
+                    pst = connection.prepareStatement("update Students set email = ?, name = ?, password = ?, age = ?, phone = ? where ID = ?");
                     pst.setString(1, newEmail.toLowerCase());
-                    Teacher.setEmail(newEmail.toLowerCase());
+                    Student.setEmail(newEmail.toLowerCase());
                     pst.setString(2, newName);
-                    Teacher.setName(newName);
+                    Student.setName(newName);
                     if (newPassword.equals("")) {
-                        pst.setString(3,Teacher.getPassword());
+                        pst.setString(3, Student.getPassword());
                     } else {
                         pst.setString(3, newPassword);
-                        Teacher.setPassword(newPassword);
+                        Student.setPassword(newPassword);
                     }
+                    pst.setInt(4, sdAge);
+                    pst.setString(5, phoneNum);
 
-                    if (sub1.equals("NONE")) {
-                        pst.setNull(4, Types.NVARCHAR);
-                        Teacher.setSub1(sub1);
-                    } else {
-                        pst.setString(4, sub1.trim());
-                        Teacher.setSub1(sub1);
-                    }
-
-                    if (sub2.equals("NONE")) {
-                        pst.setNull(5, Types.NVARCHAR);
-                        Teacher.setSub2(sub2);
-                    } else {
-                        pst.setString(5, sub2.trim());
-                        Teacher.setSub2(sub2);
-                    }
-
-                    if (sub3.equals("NONE")) {
-                        pst.setNull(6, Types.NVARCHAR);
-                        Teacher.setSub3(sub3);
-                    } else {
-                        pst.setString(6, sub3.trim());
-                        Teacher.setSub3(sub3);
-                    }
-
-                    pst.setInt(7, Teacher.getID());
+                    pst.setInt(6, Student.getID());
                     int k = pst.executeUpdate();
                     if (k == 1) {
-                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
-                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">en taken!<br>Update Done Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+                        if (updateAge.getText().equals("Change Age") && updatePhoneNumber.getText().equals("Change PhoneNumber") && UpdateName.getText().equals("Change Name") && UpdatepwdTeacherRewrite.getText().equals("New Password") && UpdatepwdTeacher.getText().equals("Rewrite Password") && UpdateEmail.getText().equals("Change Email")) {
+
+                            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Nothing Updated!</p></html>", "Note!", JOptionPane.INFORMATION_MESSAGE, image);
+                        } else {
+                            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
+                            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Update Done Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                        }
 
                     }
                 }
 
             } catch (SQLException ex) {
-                Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
+                java.util.logging.Logger.getLogger(StudentUpdateInfoPanal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
             }
         }
     }//GEN-LAST:event_UpdateTeacherButtonActionPerformed
-
-    private void UpdateNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UpdateNameActionPerformed
 
     private void UpdatepwdTeacherRewriteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UpdatepwdTeacherRewriteFocusGained
         // TODO add your handling code here:
@@ -488,7 +487,6 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
                 UpdatepwdTeacherRewrite.setEchoChar('\u2022');
             }
         }
-
     }//GEN-LAST:event_UpdatepwdTeacherRewriteFocusGained
 
     private void UpdatepwdTeacherRewriteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UpdatepwdTeacherRewriteFocusLost
@@ -499,7 +497,7 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
             UpdatepwdTeacherRewrite.setText("New Password");
             UpdatepwdTeacherRewrite.setForeground(new Color(102, 102, 102));
         }
-//[102,102,102]
+        //[102,102,102]
     }//GEN-LAST:event_UpdatepwdTeacherRewriteFocusLost
 
     private void UpdatepwdTeacherRewriteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdatepwdTeacherRewriteActionPerformed
@@ -513,7 +511,6 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
             UpdateEmail.setText("");
             UpdateEmail.setForeground(Color.white);
         }
-
     }//GEN-LAST:event_UpdateEmailFocusGained
 
     private void UpdateEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UpdateEmailFocusLost
@@ -523,7 +520,6 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
             UpdateEmail.setText("Change Email");
             UpdateEmail.setForeground(new Color(102, 102, 102));
         }
-
     }//GEN-LAST:event_UpdateEmailFocusLost
 
     private void UpdateEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateEmailActionPerformed
@@ -534,9 +530,61 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         setVisible(false);
-        new TeacherHome().setVisible(true);
+        new StudentHome().setVisible(true);
     }//GEN-LAST:event_goBackButtonActionPerformed
 
+    private void updateAgeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_updateAgeFocusGained
+        // TODO add your handling code here:
+
+        if (updateAge.getText().equals("Change Age")) {
+            updateAge.setText("");
+            updateAge.setForeground(Color.white);
+        }
+
+    }//GEN-LAST:event_updateAgeFocusGained
+
+    private void updateAgeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_updateAgeFocusLost
+        // TODO add your handling code here:
+
+        if (updateAge.getText().equals("")) {
+            updateAge.setText("Change Age");
+            updateAge.setForeground(new Color(102, 102, 102));
+        }
+
+    }//GEN-LAST:event_updateAgeFocusLost
+
+    private void updateAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateAgeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateAgeActionPerformed
+
+    private void updatePhoneNumberFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_updatePhoneNumberFocusGained
+        // TODO add your handling code here:
+
+        if (updatePhoneNumber.getText().equals("Change PhoneNumber")) {
+            updatePhoneNumber.setText("");
+            updatePhoneNumber.setForeground(Color.white);
+        }
+
+    }//GEN-LAST:event_updatePhoneNumberFocusGained
+
+    private void updatePhoneNumberFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_updatePhoneNumberFocusLost
+        // TODO add your handling code here:
+
+        if (updatePhoneNumber.getText().equals("")) {
+            updatePhoneNumber.setText("Change PhoneNumber");
+            updatePhoneNumber.setForeground(new Color(102, 102, 102));
+        }
+
+
+    }//GEN-LAST:event_updatePhoneNumberFocusLost
+
+    private void updatePhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePhoneNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updatePhoneNumberActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -551,73 +599,39 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TeacherUpdateInfoPanal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentUpdateInfoPanal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TeacherUpdateInfoPanal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentUpdateInfoPanal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TeacherUpdateInfoPanal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentUpdateInfoPanal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TeacherUpdateInfoPanal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentUpdateInfoPanal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TeacherUpdateInfoPanal().setVisible(true);
+                if (loggedIn()) {
+                    new StudentUpdateInfoPanal().setVisible(true);
+                } else {
+                    new StudentLogin().setVisible(true);
+                }
             }
         });
     }
 
-    private void getSubjects() {
-        if (LoggedIn()) {
-            try {
-                Connection connection = dbConnection.ConnectDB();
-                PreparedStatement pst;
-                pst = connection.prepareStatement("Select * from Subject ");
-
-                ResultSet rs = pst.executeQuery();
-
-                Object[] rows = new Object[]{"Default", "NONE"};
-
-                int counter = 2;
-                while (rs.next()) {
-                    Object[] temp = new Object[rows.length + 1];
-                    System.arraycopy(rows, 0, temp, 0, rows.length);
-                    rows = temp;
-                    rows[counter] = rs.getString(1);
-                    counter++;
-//                System.out.println(Arrays.toString(rows));
-                }
-                UpdateSubject1.setModel(new javax.swing.DefaultComboBoxModel(rows));
-                UpdateSubject2.setModel(new javax.swing.DefaultComboBoxModel(rows));
-                UpdateSubject3.setModel(new javax.swing.DefaultComboBoxModel(rows));
-
-            } catch (SQLException ex) {
-                Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
-
-            }
-
+    private static boolean loggedIn() {
+        if (Student.getName() != null) {
+            return true;
         } else {
-            String[] options = {"Login", "Exit"};
-            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            int a = JOptionPane.showOptionDialog(null, "To Update your Profile you must Login as Teacher first?", "Login or Exit!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, image, options, 0);
-            if (a == 0 || a == -1) {
-                setVisible(false);
-                new TeacherLogin().setVisible(true);
-            } else if (a == 1) {
-                System.exit(0);
-
-            }
+            return false;
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField UpdateEmail;
     private javax.swing.JTextField UpdateName;
-    private javax.swing.JComboBox<String> UpdateSubject1;
-    private javax.swing.JComboBox<String> UpdateSubject2;
-    private javax.swing.JComboBox<String> UpdateSubject3;
     private javax.swing.JButton UpdateTeacherButton;
     private javax.swing.JPasswordField UpdatepwdTeacher;
     private javax.swing.JPasswordField UpdatepwdTeacherRewrite;
@@ -625,11 +639,10 @@ public class TeacherUpdateInfoPanal extends javax.swing.JFrame {
     private javax.swing.JButton closeApplication;
     private javax.swing.JButton goBackButton;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JTextField updateAge;
+    private javax.swing.JTextField updatePhoneNumber;
     // End of variables declaration//GEN-END:variables
 }
