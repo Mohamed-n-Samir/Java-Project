@@ -6,6 +6,8 @@ public class StudentTest {
     private static int testID;
     private static String testName;
     private static int testTime;
+    private static int questionID;
+    private static int studentMark;
 
     public static int getTestMark() {
         return testMark;
@@ -13,6 +15,22 @@ public class StudentTest {
 
     public static void setTestMark(int testMark) {
         StudentTest.testMark = testMark;
+    }
+
+    public static int getStudentMark() {
+        return studentMark;
+    }
+
+    public static void setStudentMark(int studentMark) {
+        StudentTest.studentMark = studentMark;
+    }
+
+    public static int getQuestionID() {
+        return questionID;
+    }
+
+    public static void setQuestionID(int questionID) {
+        StudentTest.questionID = questionID;
     }
 
     public static int getTestTime() {

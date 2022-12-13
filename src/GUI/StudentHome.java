@@ -10,6 +10,9 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 
 public class StudentHome extends javax.swing.JFrame {
@@ -17,7 +20,7 @@ public class StudentHome extends javax.swing.JFrame {
     DbConnection dbConnection = new DbConnection();
     StudentTest studentTest = new StudentTest();
 
-    public StudentHome() {
+public StudentHome() {
 
         initComponents();
         getContentPane().setBackground(Color.white);                                                 // set new background color
@@ -31,9 +34,11 @@ public class StudentHome extends javax.swing.JFrame {
                     jLabel2.setText("Student");
                 }
                 getStudentAllSubjects();
+                getAllDoneTests();
             }
         });
     }
+    
 
     public void TestTable(String subject) {
 
@@ -109,6 +114,9 @@ public class StudentHome extends javax.swing.JFrame {
         studentTestTable = new javax.swing.JTable();
         studentEnterTestButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        studentDoneTestTable = new javax.swing.JTable();
+        showDoneTestButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         studentID = new CustomComponent.ReadField(50);
@@ -184,7 +192,7 @@ public class StudentHome extends javax.swing.JFrame {
         getContentPane().add(goBackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 6, 46, 45));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/student (1)_1.png"))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, 52, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 30, 52, -1));
 
         jPanel5.setBackground(new java.awt.Color(0, 0, 0));
         jPanel5.setPreferredSize(new java.awt.Dimension(100, 1));
@@ -202,13 +210,13 @@ public class StudentHome extends javax.swing.JFrame {
             .addGap(0, 1, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Lato", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(45, 68, 86));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Student");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 110, 324, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 110, 324, -1));
 
         jPanel10.setBackground(new java.awt.Color(0, 0, 0));
         jPanel10.setPreferredSize(new java.awt.Dimension(100, 1));
@@ -226,7 +234,7 @@ public class StudentHome extends javax.swing.JFrame {
             .addGap(0, 1, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, -1, -1));
+        getContentPane().add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 70, -1, -1));
 
         studentInbox.setBackground(new java.awt.Color(70, 202, 255));
         studentInbox.setFont(new java.awt.Font("Lato", 2, 18)); // NOI18N
@@ -322,16 +330,42 @@ public class StudentHome extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab1", jPanel1);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1620, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 579, Short.MAX_VALUE)
-        );
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        studentDoneTestTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        studentDoneTestTable.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                studentDoneTestTableFocusLost(evt);
+            }
+        });
+        studentDoneTestTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                studentDoneTestTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(studentDoneTestTable);
+
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 760, 450));
+
+        showDoneTestButton.setBackground(new java.awt.Color(70, 202, 255));
+        showDoneTestButton.setFont(new java.awt.Font("Lato", 2, 18)); // NOI18N
+        showDoneTestButton.setForeground(new java.awt.Color(255, 255, 255));
+        showDoneTestButton.setText("Show Test");
+        showDoneTestButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        showDoneTestButton.setEnabled(false);
+        showDoneTestButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showDoneTestButtonActionPerformed(evt);
+            }
+        });
+        jPanel3.add(showDoneTestButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, 370, 60));
 
         jTabbedPane1.addTab("tab2", jPanel3);
 
@@ -556,6 +590,7 @@ public class StudentHome extends javax.swing.JFrame {
 
         jTabbedPane1.setSelectedIndex(3);
         setStudentTestTableNoRow();
+        disableButton();
 
 
     }//GEN-LAST:event_studentProfileActionPerformed
@@ -579,6 +614,7 @@ public class StudentHome extends javax.swing.JFrame {
 
         jTabbedPane1.setSelectedIndex(1);
         setStudentTestTableNoRow();
+//                disableButton();
 
 
     }//GEN-LAST:event_studentTestDoneActionPerformed
@@ -595,6 +631,7 @@ public class StudentHome extends javax.swing.JFrame {
 
         jTabbedPane1.setSelectedIndex(2);
         setStudentTestTableNoRow();
+        disableButton();
 
 
     }//GEN-LAST:event_studentInboxActionPerformed
@@ -603,6 +640,7 @@ public class StudentHome extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         jTabbedPane1.setSelectedIndex(0);
+        disableButton();
 
     }//GEN-LAST:event_studentTestsActionPerformed
 
@@ -727,8 +765,8 @@ public class StudentHome extends javax.swing.JFrame {
 
     private void studentEnterTestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentEnterTestButtonActionPerformed
         // TODO add your handling code here:
-        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-        int a = JOptionPane.showOptionDialog(null, "The test is " + studentTest.getTestTime() + " Minutes\n are you sure you want to Enter the test?", "Warning!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, image, null, 0);
+        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
+        int a = JOptionPane.showOptionDialog(null, "The test is " + studentTest.getTestTime() + " Minutes\n are you sure you want to Enter the test?", "Warning!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, 0);
         if (a == 0) {
             setVisible(false);
             new StudentTestForm().setVisible(true);
@@ -748,6 +786,32 @@ public class StudentHome extends javax.swing.JFrame {
         setStudentTestTableNoRow();
 
     }//GEN-LAST:event_SubjectsActionPerformed
+
+    private void studentDoneTestTableFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_studentDoneTestTableFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studentDoneTestTableFocusLost
+
+    private void studentDoneTestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentDoneTestTableMouseClicked
+        // TODO add your handling code here:
+
+        DefaultTableModel d1 = (DefaultTableModel) studentDoneTestTable.getModel();
+        int SelectIndex = studentDoneTestTable.getSelectedRow();
+        StudentTest.setTestID(Integer.parseInt(d1.getValueAt(SelectIndex, 0).toString()));
+        StudentTest.setTestName(d1.getValueAt(SelectIndex, 1).toString());
+        StudentTest.setTestTime(Integer.parseInt(d1.getValueAt(SelectIndex, 3).toString()));
+        StudentTest.setStudentMark(Integer.parseInt(d1.getValueAt(SelectIndex, 6).toString()));
+        StudentTest.setTestMark(Integer.parseInt(d1.getValueAt(SelectIndex, 2).toString()));
+        showDoneTestButton.setEnabled(true);
+
+    }//GEN-LAST:event_studentDoneTestTableMouseClicked
+
+    private void showDoneTestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDoneTestButtonActionPerformed
+        // TODO add your handling code here:
+
+        setVisible(false);
+        new ShowCorrectedTest().setVisible(true);
+
+    }//GEN-LAST:event_showDoneTestButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -847,6 +911,49 @@ public class StudentHome extends javax.swing.JFrame {
         studentEnterTestButton.setEnabled(false);
     }
 
+    void getAllDoneTests() {
+
+        Connection connection = dbConnection.getConnection();
+        PreparedStatement pst;
+        try {
+            pst = connection.prepareStatement("select Test.ID,Test.[name] as Test_Name,Test.noOfQuestions,Test.[time],Test.[subject],Teacher.[name] as Teacher_Name,StudentsTestOnce.degree\n"
+                    + "from Test\n"
+                    + "INNER JOIN StudentsTestOnce\n"
+                    + "on Test.ID = StudentsTestOnce.testID\n"
+                    + "INNER JOIN Teacher\n"
+                    + "on Teacher.ID = Test.teacherID\n"
+                    + " Where studentID = " + Student.getID());
+
+            ResultSet rs = pst.executeQuery();
+            ResultSetMetaData RSM = rs.getMetaData();
+            int c;
+            c = RSM.getColumnCount();
+            DefaultTableModel DF = (DefaultTableModel) studentDoneTestTable.getModel();
+            DF.setRowCount(0);
+            String[] colName = new String[c];
+            for (int i = 0; i < c; i++) {
+                colName[i] = RSM.getColumnName(i + 1);
+            }
+            DF.setColumnIdentifiers(colName);
+
+            Object[] rows;
+            while (rs.next()) {
+                DF.addRow(rows = new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
+
+            }
+
+            studentDoneTestTable.getColumnModel().getColumn(0).setMinWidth(0);
+            studentDoneTestTable.getColumnModel().getColumn(0).setMaxWidth(0);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    void disableButton() {
+        showDoneTestButton.setEnabled(false);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Subjects;
@@ -869,9 +976,12 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton logout;
+    private javax.swing.JButton showDoneTestButton;
     private javax.swing.JTextField studentAge;
+    private javax.swing.JTable studentDoneTestTable;
     private javax.swing.JTextField studentEmail;
     private javax.swing.JButton studentEnterTestButton;
     private javax.swing.JTextField studentID;

@@ -4,81 +4,77 @@ import ProjectApplication.DbConnection;
 import UsersClasses.Student;
 import UsersClasses.StudentTest;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
+import java.awt.Component;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-public class StudentTestForm extends javax.swing.JFrame {
-
-    Timer time;
-    public String answer;
-    public int min = 0;
-    public int sec = 0;
+public class ShowCorrectedTest extends javax.swing.JFrame {
 
     DbConnection dbConnection = new DbConnection();
 
-    public StudentTestForm() {
+    public ShowCorrectedTest() {
         initComponents();
-        getContentPane().setBackground(Color.white);
-        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 15, 15));
+        getContentPane().setBackground(Color.white);                                                 // set new background color
+        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 15, 15)); // make rounded corners
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
                 jLabel2.setText("Test: " + StudentTest.getTestName());
-                jLabel6.setText("Total Time: " + StudentTest.getTestTime() + " Min");
-                jScrollPane1.setVisible(false);
-
+                markOutOf.setText("Your Mark: " + StudentTest.getStudentMark() + "/" + StudentTest.getTestMark());
+                jScrollPane1.setFocusable(false);
+                r1.setEnabled(false);
+                r2.setEnabled(false);
+                r3.setEnabled(false);
+                r4.setEnabled(false);
+                setCorrectPhotoNoVisible();
                 try {
                     Connection connection = dbConnection.getConnection();
-                    pst1 = connection.prepareStatement("select * from Questions where testID = " + StudentTest.getTestID());;
+                    pst1 = connection.prepareStatement("select TOP " + StudentTest.getTestMark() + " *\n"
+                            + "from StudentsTestQuestions\n"
+                            + "INNER JOIN Questions\n"
+                            + "on StudentsTestQuestions.testQuestionsID = Questions.ID\n"
+                            + "where Questions.testID = " + StudentTest.getTestID() + " and studentID = " + Student.getID()
+                            + "order by StudentsTestQuestions.testQuestionsID asc");
                     rs1 = pst1.executeQuery();
-                } catch (SQLException ex) {
+                    getQuestions();
 
+                } catch (SQLException ex) {
+                    java.util.logging.Logger.getLogger(ShowCorrectedTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 }
-                loadQuestions();
-                testTimer();
+
             }
         });
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                System.out.println("In shutdown hook");
-                submit();
-                System.exit(0);
-            }
-        }, "Shutdown-thread"));
-
+        
     }
+
     PreparedStatement pst1;
     ResultSet rs1;
-    int questionFrom = 1;
-    int mark = 0;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         closeApplication = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        fromQuestion = new javax.swing.JLabel();
+        markOutOf = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         nextQuestionBotton = new javax.swing.JButton();
+        ans4Correct = new javax.swing.JLabel();
+        ans1Correct = new javax.swing.JLabel();
+        ans2Correct = new javax.swing.JLabel();
+        ans3Correct = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         r1 = new javax.swing.JRadioButton();
         r3 = new javax.swing.JRadioButton();
         r4 = new javax.swing.JRadioButton();
@@ -88,13 +84,11 @@ public class StudentTestForm extends javax.swing.JFrame {
         submitQuestionBotton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         answerTextArea = new javax.swing.JTextArea();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        answerTextArea1 = new javax.swing.JTextArea();
+        goBackButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1370, 800));
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -108,7 +102,7 @@ public class StudentTestForm extends javax.swing.JFrame {
                 closeApplicationActionPerformed(evt);
             }
         });
-        getContentPane().add(closeApplication, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 30, -1, -1));
+        getContentPane().add(closeApplication, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 20, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Lato", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(45, 68, 86));
@@ -116,9 +110,9 @@ public class StudentTestForm extends javax.swing.JFrame {
         jLabel2.setText("Test: ");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, 450, -1));
 
-        fromQuestion.setFont(new java.awt.Font("Lato", 0, 24)); // NOI18N
-        fromQuestion.setText("12/12");
-        getContentPane().add(fromQuestion, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 80, -1));
+        markOutOf.setFont(new java.awt.Font("Lato", 0, 24)); // NOI18N
+        markOutOf.setText("12/12");
+        getContentPane().add(markOutOf, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 190, 200, -1));
 
         jPanel10.setBackground(new java.awt.Color(0, 0, 0));
         jPanel10.setPreferredSize(new java.awt.Dimension(100, 1));
@@ -174,7 +168,28 @@ public class StudentTestForm extends javax.swing.JFrame {
         });
         jPanel1.add(nextQuestionBotton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 500, 140, 50));
 
-        buttonGroup1.add(r1);
+        ans4Correct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/accept.png"))); // NOI18N
+        jPanel1.add(ans4Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 420, -1, 40));
+
+        ans1Correct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/accept.png"))); // NOI18N
+        jPanel1.add(ans1Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, -1, 40));
+
+        ans2Correct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/accept.png"))); // NOI18N
+        jPanel1.add(ans2Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, -1, 40));
+
+        ans3Correct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/accept.png"))); // NOI18N
+        jPanel1.add(ans3Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, -1, 40));
+
+        jLabel3.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Your Answer");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 120, 30));
+
+        jLabel1.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Correct Answer");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 330, 130, 30));
+
         r1.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
         r1.setForeground(new java.awt.Color(255, 255, 255));
         r1.setText("Answer1");
@@ -185,13 +200,11 @@ public class StudentTestForm extends javax.swing.JFrame {
         });
         jPanel1.add(r1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 150, 760, 40));
 
-        buttonGroup1.add(r3);
         r3.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
         r3.setForeground(new java.awt.Color(255, 255, 255));
         r3.setText("Answer3");
         jPanel1.add(r3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 760, 40));
 
-        buttonGroup1.add(r4);
         r4.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
         r4.setForeground(new java.awt.Color(255, 255, 255));
         r4.setText("Answer4");
@@ -202,7 +215,6 @@ public class StudentTestForm extends javax.swing.JFrame {
         });
         jPanel1.add(r4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 760, 40));
 
-        buttonGroup1.add(r2);
         r2.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
         r2.setForeground(new java.awt.Color(255, 255, 255));
         r2.setText("Answer2");
@@ -238,30 +250,35 @@ public class StudentTestForm extends javax.swing.JFrame {
         answerTextArea.setColumns(20);
         answerTextArea.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
         answerTextArea.setRows(5);
+        answerTextArea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        answerTextArea.setFocusable(false);
         jScrollPane1.setViewportView(answerTextArea);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 1100, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 360, 450, -1));
+
+        answerTextArea1.setColumns(20);
+        answerTextArea1.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        answerTextArea1.setRows(5);
+        answerTextArea1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        answerTextArea1.setFocusable(false);
+        jScrollPane2.setViewportView(answerTextArea1);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 200, 450, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 1370, 570));
 
-        jLabel6.setFont(new java.awt.Font("Lato", 0, 24)); // NOI18N
-        jLabel6.setText("Test Time:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 190, 210, -1));
-
-        jLabel1.setFont(new java.awt.Font("Lato", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("0 ");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 190, 30, 30));
-
-        jLabel3.setFont(new java.awt.Font("Lato", 1, 24)); // NOI18N
-        jLabel3.setText(":");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 190, 10, 30));
-
-        jLabel4.setFont(new java.awt.Font("Lato", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel4.setText("0");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 190, 30, 30));
+        goBackButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Group 16.png"))); // NOI18N
+        goBackButton.setBorder(null);
+        goBackButton.setBorderPainted(false);
+        goBackButton.setContentAreaFilled(false);
+        goBackButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        goBackButton.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        goBackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goBackButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(goBackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 6, 46, 45));
 
         pack();
         setLocationRelativeTo(null);
@@ -269,28 +286,23 @@ public class StudentTestForm extends javax.swing.JFrame {
 
     private void closeApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeApplicationActionPerformed
         // TODO add your handling code here:
+
         ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-        int a = JOptionPane.showOptionDialog(null, "Are you Sure to Exit The Test?", "Exit Test!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, image, null, 0);
+        int a = JOptionPane.showOptionDialog(null, "Are you Sure to Exit The Program?", "Exit!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, image, null, 0);
         if (a == 0) {
             System.exit(0);
 
         }
+
     }//GEN-LAST:event_closeApplicationActionPerformed
 
     private void nextQuestionBottonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextQuestionBottonActionPerformed
         // TODO add your handling code here:
-        if (!r1.isSelected() && !r2.isSelected() && !r3.isSelected() && !r4.isSelected() && answerTextArea.getText().equals("")) {
-
-            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">You Must Choose answer First!</p></html>", "Warning!", JOptionPane.INFORMATION_MESSAGE, image);
-
-        } else {
-            answerCheck();
-            buttonGroup1.clearSelection();
-            answerTextArea.setText("");
-            System.out.println(mark);
-            loadQuestions();
-        }
+        r1.setSelected(false);
+        r2.setSelected(false);
+        r3.setSelected(false);
+        r4.setSelected(false);
+        getQuestions();
 
     }//GEN-LAST:event_nextQuestionBottonActionPerformed
 
@@ -308,9 +320,16 @@ public class StudentTestForm extends javax.swing.JFrame {
 
     private void submitQuestionBottonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitQuestionBottonActionPerformed
         // TODO add your handling code here:
-        submit();
-
     }//GEN-LAST:event_submitQuestionBottonActionPerformed
+
+    private void goBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackButtonActionPerformed
+        // TODO add your handling code here:
+
+        setVisible(false);
+        StudentHome studentHome = new StudentHome();
+        studentHome.setVisible(true);
+        studentHome.jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_goBackButtonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -323,16 +342,24 @@ public class StudentTestForm extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StudentTestForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShowCorrectedTest.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StudentTestForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShowCorrectedTest.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StudentTestForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShowCorrectedTest.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StudentTestForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ShowCorrectedTest.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -340,155 +367,13 @@ public class StudentTestForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 if (loggedIn()) {
-                    new StudentTestForm().setVisible(true);
+
+                    new ShowCorrectedTest().setVisible(true);
                 } else {
                     new StudentLogin().setVisible(true);
                 }
             }
         });
-    }
-
-    void loadQuestions() {
-        try {
-            if (rs1.next()) {
-                fromQuestion.setText(questionFrom + " / " + StudentTest.getTestMark());
-                QuestionNumber.setText(questionFrom + ") ");
-                Question.setText(rs1.getString(2));
-                answer = rs1.getString(7);
-                StudentTest.setQuestionID(rs1.getInt(1));
-                System.out.println(answer);
-                if (rs1.getString(3) != null) {
-                    jScrollPane1.setVisible(false);
-                    r1.setVisible(true);
-                    r2.setVisible(true);
-                    r3.setVisible(true);
-                    r4.setVisible(true);
-                    r1.setText(rs1.getString(3));
-                    r2.setText(rs1.getString(4));
-                    r3.setText(rs1.getString(5));
-                    r4.setText(rs1.getString(6));
-                } else {
-                    r1.setVisible(false);
-                    r2.setVisible(false);
-                    r3.setVisible(false);
-                    r4.setVisible(false);
-                    jScrollPane1.setVisible(true);
-
-                }
-
-                questionFrom++;
-            } else {
-                nextQuestionBotton.setVisible(false);
-            }
-            if (questionFrom > StudentTest.getTestMark()) {
-                nextQuestionBotton.setVisible(false);
-
-            }
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(TeacherHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-    }
-
-    SimpleDateFormat dFromat = new SimpleDateFormat("dd-MM-YYYY");
-    Date date = new Date();
-
-    void testTimer() {
-        setLocationRelativeTo(this);
-        time = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jLabel4.setText(String.valueOf(sec));
-                jLabel1.setText(String.valueOf(min));
-
-                if (sec == 60) {
-                    sec = 0;
-                    min++;
-                    if (min == StudentTest.getTestTime()) {
-                        min = 0;
-                        sec = 0;
-
-                        time.stop();
-                        submit();
-
-                    }
-                }
-                sec++;
-            }
-        });
-        time.start();
-    }
-
-    public void answerCheck() {
-        String studentAnswer = "";
-        if (r1.isSelected()) {
-            studentAnswer = "Answer 1";
-        } else if (r2.isSelected()) {
-            studentAnswer = "Answer 2";
-        } else if (r3.isSelected()) {
-            studentAnswer = "Answer 3";
-        } else if (r4.isSelected()) {
-            studentAnswer = "Answer 4";
-        } else {
-            studentAnswer = answerTextArea.getText();
-        }
-
-        if (studentAnswer.equals(answer)) {
-            mark++;
-        }
-
-        if (!studentAnswer.equals("")) {
-
-            try {
-                Connection connection = dbConnection.ConnectDB();
-                PreparedStatement pst = connection.prepareStatement("insert into StudentsTestQuestions(studentAnswer,studentID,testQuestionsID,testID) values(?,?,?,?)");
-                pst.setString(1, studentAnswer);
-                pst.setInt(2, Student.getID());
-                pst.setInt(3, StudentTest.getQuestionID());
-                pst.setInt(4, StudentTest.getTestID());
-
-                int k = pst.executeUpdate();
-
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Failed to connect to the DB!", "Error", JOptionPane.ERROR_MESSAGE);
-
-                Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-    }
-
-//    public void question() {
-//
-//    }
-    public void submit() {
-        answerCheck();
-        time.stop();
-        try {
-            Connection connection = dbConnection.ConnectDB();
-            PreparedStatement pst = connection.prepareStatement("insert into StudentsTestOnce(studentID,testID,degree) values(?,?,?)");
-            pst.setInt(1, Student.getID());
-            pst.setInt(2, StudentTest.getTestID());
-            pst.setInt(3, mark);
-
-            int k = pst.executeUpdate();
-            if (k == 1) {
-
-                JOptionPane.showMessageDialog(this, "Test is Done you Mark is " + mark);
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to submit the test check the db connction!", "Error", JOptionPane.ERROR_MESSAGE);
-
-            }
-
-            setVisible(false);
-            new StudentHome().setVisible(true);
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Failed to submit the test check the db connction!", "Error", JOptionPane.ERROR_MESSAGE);
-
-            Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     private static boolean loggedIn() {
@@ -499,24 +384,106 @@ public class StudentTestForm extends javax.swing.JFrame {
         }
     }
 
+    void setCorrectPhotoNoVisible() {
+        ans1Correct.setVisible(false);
+        ans2Correct.setVisible(false);
+        ans3Correct.setVisible(false);
+        ans4Correct.setVisible(false);
+    }
+
+    int questionFrom = 1;
+    String answer = "";
+    String studentAnswer = "";
+
+    void getQuestions() {
+        try {
+            if (rs1.next()) {
+                answerTextArea1.setText("");
+
+                answerTextArea.setText("");
+                setCorrectPhotoNoVisible();
+                QuestionNumber.setText(questionFrom + ") ");
+                Question.setText(rs1.getString(6));
+                answer = rs1.getString(11);
+                studentAnswer = rs1.getString(1);
+//                StudentTest.setQuestionID(rs1.getInt(1));
+
+                if (rs1.getString(9) == null) {
+                    r1.setText("");
+                    r2.setText("");
+                    r3.setText("");
+                    r4.setText("");
+
+                } else {
+                    r1.setText(rs1.getString(7));
+                    r2.setText(rs1.getString(8));
+                    r3.setText(rs1.getString(9));
+                    r4.setText(rs1.getString(10));
+                }
+
+                if (answer.equals("Answer 1")) {
+                    ans1Correct.setVisible(true);
+                } else if (answer.equals("Answer 2")) {
+                    ans2Correct.setVisible(true);
+                } else if (answer.equals("Answer 3")) {
+                    ans3Correct.setVisible(true);
+                } else if (answer.equals("Answer 4")) {
+                    ans4Correct.setVisible(true);
+                } else {
+                    answerTextArea.setText(answer);
+                }
+                if (studentAnswer.equals("Answer 1")) {
+                    r1.setSelected(true);
+                } else if (studentAnswer.equals("Answer 2")) {
+                    r2.setSelected(true);
+                } else if (studentAnswer.equals("Answer 3")) {
+                    r3.setSelected(true);
+                } else if (studentAnswer.equals("Answer 4")) {
+                    r4.setSelected(true);
+                } else {
+                    answerTextArea1.setText(studentAnswer);
+                    answerTextArea.setText(answer);
+                }
+
+            } else {
+                ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
+                int a = JOptionPane.showOptionDialog(null, "This Was the Last Question you have answerd\n go back to the Student Home?", "GoBack!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, image, null, 0);
+                if (a == 0) {
+                    setVisible(false);
+                    StudentHome studentHome = new StudentHome();
+                    studentHome.setVisible(true);
+                    studentHome.jTabbedPane1.setSelectedIndex(1);
+                }
+            }
+            questionFrom++;
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(ShowCorrectedTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Question;
     private javax.swing.JLabel QuestionNumber;
+    private javax.swing.JLabel ans1Correct;
+    private javax.swing.JLabel ans2Correct;
+    private javax.swing.JLabel ans3Correct;
+    private javax.swing.JLabel ans4Correct;
     private javax.swing.JTextArea answerTextArea;
-    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextArea answerTextArea1;
     private javax.swing.JButton closeApplication;
-    private javax.swing.JLabel fromQuestion;
+    private javax.swing.JButton goBackButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel markOutOf;
     private javax.swing.JButton nextQuestionBotton;
     private javax.swing.JRadioButton r1;
     private javax.swing.JRadioButton r2;
