@@ -36,7 +36,6 @@ public class TeacherHome extends javax.swing.JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
-                jTabbedPane1.setSelectedIndex(0);
                 if (LoggedIn()) {
                     jLabel2.setText("Welcome " + Teacher.getName());
                     TestTable();
@@ -2335,6 +2334,10 @@ public class TeacherHome extends javax.swing.JFrame {
 
     private void TeacherReportStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeacherReportStudentActionPerformed
         // TODO add your handling code here:
+        
+        setVisible(false);
+        new TeacherReportStudent().setVisible(true);
+        
     }//GEN-LAST:event_TeacherReportStudentActionPerformed
 
     /**
@@ -2630,7 +2633,7 @@ public class TeacherHome extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel listNumberOfQuestions;
     private javax.swing.JButton listTests;
     private javax.swing.JButton logout;

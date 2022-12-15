@@ -52,13 +52,13 @@ public class StudentTestForm extends javax.swing.JFrame {
                 testTimer();
             }
         });
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                System.out.println("In shutdown hook");
-                submit();
-                System.exit(0);
-            }
-        }, "Shutdown-thread"));
+//        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+//            public void run() {
+//                System.out.println("In shutdown hook");
+//                submit();
+//                System.exit(0);
+//            }
+//        }, "Shutdown-thread"));
 
     }
     PreparedStatement pst1;

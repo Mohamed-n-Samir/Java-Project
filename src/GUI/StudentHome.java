@@ -20,7 +20,7 @@ public class StudentHome extends javax.swing.JFrame {
     DbConnection dbConnection = new DbConnection();
     StudentTest studentTest = new StudentTest();
 
-public StudentHome() {
+    public StudentHome() {
 
         initComponents();
         getContentPane().setBackground(Color.white);                                                 // set new background color
@@ -35,10 +35,13 @@ public StudentHome() {
                 }
                 getStudentAllSubjects();
                 getAllDoneTests();
+                ReadTable();
+                ReportTable();
+                jScrollPane5.setVisible(false);
+
             }
         });
     }
-    
 
     public void TestTable(String subject) {
 
@@ -91,6 +94,82 @@ public StudentHome() {
 
     }
 
+    public void ReportTable() {
+        try {
+            Connection connection = dbConnection.getConnection();
+
+            PreparedStatement pst;
+            pst = connection.prepareStatement("select teacherName,testSubject,testName,studentDegree,fullMark,messDate,reportMessage from studentReport where (studentID = " + Student.getID() + "and archived = 0 ) ORDER BY messDate DESC");
+
+            ResultSet rs = pst.executeQuery();
+            ResultSetMetaData RSM = rs.getMetaData();
+
+            int c;
+            c = RSM.getColumnCount();
+
+            DefaultTableModel DF = (DefaultTableModel) TeacherReports.getModel();
+            DF.setRowCount(0);
+            String[] colName = new String[c];
+            for (int i = 0; i < c; i++) {
+                colName[i] = RSM.getColumnName(i + 1);
+            }
+            DF.setColumnIdentifiers(colName);
+
+            Object[] rows;
+            while (rs.next()) {
+
+                DF.addRow(rows = new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
+
+            }
+
+            TeacherReports.getColumnModel().getColumn(6).setMinWidth(0);
+            TeacherReports.getColumnModel().getColumn(6).setMaxWidth(0);
+            TeacherReports.fixTable(jScrollPane3);
+//            studentTestTable.getColumnModel().getColumn(0).setMinWidth(0);
+//            studentTestTable.getColumnModel().getColumn(0).setMaxWidth(0);
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(TeacherHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+
+    public void ReadTable() {
+        try {
+            Connection connection = dbConnection.getConnection();
+
+            PreparedStatement pst;
+            pst = connection.prepareStatement("select teacherName,testSubject,testName,studentDegree,fullMark,messDate,reportMessage from studentReport where (studentID = " + Student.getID() + "and archived = 1 ) ORDER BY messDate DESC");
+
+            ResultSet rs = pst.executeQuery();
+            ResultSetMetaData RSM = rs.getMetaData();
+
+            int c;
+            c = RSM.getColumnCount();
+
+            DefaultTableModel DF = (DefaultTableModel) readTable.getModel();
+            DF.setRowCount(0);
+            String[] colName = new String[c];
+            for (int i = 0; i < c; i++) {
+                colName[i] = RSM.getColumnName(i + 1);
+            }
+            DF.setColumnIdentifiers(colName);
+
+            Object[] rows;
+            while (rs.next()) {
+
+                DF.addRow(rows = new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
+
+            }
+
+            readTable.getColumnModel().getColumn(6).setMinWidth(0);
+            readTable.getColumnModel().getColumn(6).setMaxWidth(0);
+            readTable.fixTable(jScrollPane5);
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(TeacherHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -118,6 +197,15 @@ public StudentHome() {
         studentDoneTestTable = new javax.swing.JTable();
         showDoneTestButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        readTable = new CustomComponent.TableTextCenter();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TeacherReports = new CustomComponent.TableTextCenter();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        archived = new javax.swing.JCheckBox();
         jPanel6 = new javax.swing.JPanel();
         studentID = new CustomComponent.ReadField(50);
         jLabel1 = new javax.swing.JLabel();
@@ -369,16 +457,68 @@ public StudentHome() {
 
         jTabbedPane1.addTab("tab2", jPanel3);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1620, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 579, Short.MAX_VALUE)
-        );
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        readTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        readTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                readTableMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(readTable);
+
+        jPanel4.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 800, -1));
+
+        TeacherReports.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        TeacherReports.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TeacherReportsMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(TeacherReports);
+
+        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 800, 440));
+
+        jScrollPane4.setFocusable(false);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        jTextArea1.setRows(5);
+        jTextArea1.setFocusable(false);
+        jScrollPane4.setViewportView(jTextArea1);
+
+        jPanel4.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 70, 460, 330));
+
+        jLabel8.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        jLabel8.setText("Message Display :");
+        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 40, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        jLabel9.setText("UnRead Reports :");
+        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 170, -1));
+
+        archived.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        archived.setText("Read Reports");
+        archived.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                archivedActionPerformed(evt);
+            }
+        });
+        jPanel4.add(archived, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 410, -1, 40));
 
         jTabbedPane1.addTab("tab3", jPanel4);
 
@@ -813,6 +953,55 @@ public StudentHome() {
 
     }//GEN-LAST:event_showDoneTestButtonActionPerformed
 
+    private void archivedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archivedActionPerformed
+        // TODO add your handling code here:
+
+        if (archived.isSelected()) {
+            jScrollPane5.setVisible(true);
+            jLabel9.setText("Read Reports");
+
+        } else {
+            jScrollPane5.setVisible(false);
+            jLabel9.setText("UnRead Reports");
+
+        }
+
+    }//GEN-LAST:event_archivedActionPerformed
+
+    private void readTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_readTableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel d1 = (DefaultTableModel) readTable.getModel();
+        int SelectIndex = readTable.getSelectedRow();
+        jTextArea1.setText(d1.getValueAt(SelectIndex, 5).toString() + "\n\nTeacher : " + d1.getValueAt(SelectIndex, 0).toString() + "\n\n" + d1.getValueAt(SelectIndex, 6).toString());
+
+    }//GEN-LAST:event_readTableMouseClicked
+
+    private void TeacherReportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TeacherReportsMouseClicked
+
+        DefaultTableModel d1 = (DefaultTableModel) TeacherReports.getModel();
+        int SelectIndex = TeacherReports.getSelectedRow();
+        jTextArea1.setText(d1.getValueAt(SelectIndex, 5).toString() + "\n\nTeacher : " + d1.getValueAt(SelectIndex, 0).toString() + "\n\n" + d1.getValueAt(SelectIndex, 6).toString());
+
+        try {
+            // TODO add your handling code here:
+            Connection connection = dbConnection.getConnection();
+            PreparedStatement pst;
+            pst = connection.prepareStatement("update studentReport set archived = (~archived) where (studentID = " + Student.getID() + " and reportMessage = '" + d1.getValueAt(SelectIndex, 6).toString() + "')");
+            int k = pst.executeUpdate();
+            if (k == 1) {
+                System.out.println(d1.getValueAt(SelectIndex, 6).toString());
+                ReadTable();
+                ReportTable();
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_TeacherReportsMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -922,7 +1111,8 @@ public StudentHome() {
                     + "on Test.ID = StudentsTestOnce.testID\n"
                     + "INNER JOIN Teacher\n"
                     + "on Teacher.ID = Test.teacherID\n"
-                    + " Where studentID = " + Student.getID());
+                    + "Where studentID = " + Student.getID()+"\n"
+                    + "ORDER BY StudentsTestOnce.testID DESC");
 
             ResultSet rs = pst.executeQuery();
             ResultSetMetaData RSM = rs.getMetaData();
@@ -957,6 +1147,8 @@ public StudentHome() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Subjects;
+    private CustomComponent.TableTextCenter TeacherReports;
+    private javax.swing.JCheckBox archived;
     private javax.swing.JButton closeApplication;
     private javax.swing.JButton goBackButton;
     private javax.swing.JLabel jLabel1;
@@ -969,6 +1161,8 @@ public StudentHome() {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel3;
@@ -977,8 +1171,13 @@ public StudentHome() {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     public javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton logout;
+    private CustomComponent.TableTextCenter readTable;
     private javax.swing.JButton showDoneTestButton;
     private javax.swing.JTextField studentAge;
     private javax.swing.JTable studentDoneTestTable;

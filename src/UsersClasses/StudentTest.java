@@ -8,9 +8,37 @@ public class StudentTest {
     private static int testTime;
     private static int questionID;
     private static int studentMark;
+    private static int studentID;
+    private static int studentName;
+    private static int studentPhoneNumber;
+    
 
     public static int getTestMark() {
         return testMark;
+    }
+
+    public static int getStudentPhoneNumber() {
+        return studentPhoneNumber;
+    }
+
+    public static void setStudentPhoneNumber(int studentPhoneNumber) {
+        StudentTest.studentPhoneNumber = studentPhoneNumber;
+    }
+
+    public static int getStudentName() {
+        return studentName;
+    }
+
+    public static void setStudentName(int studentName) {
+        StudentTest.studentName = studentName;
+    }
+
+    public static int getStudentID() {
+        return studentID;
+    }
+
+    public static void setStudentID(int studentID) {
+        StudentTest.studentID = studentID;
     }
 
     public static void setTestMark(int testMark) {
