@@ -13,7 +13,6 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ProjectApplication.*;
-import java.util.Arrays;
 import UsersClasses.Teacher;
 
 public class TeacherUpdateInfoPanal extends javax.swing.JFrame {

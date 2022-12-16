@@ -1339,18 +1339,23 @@ public class TeacherHome extends javax.swing.JFrame {
                     pst.setInt(3, noOfQuestionsi);
                     pst.setInt(4, testTime);
                     pst.setString(5, Subject.getSelectedItem().toString());
+                    if (!Subject.getSelectedItem().toString().equals("NONE")) {
+                        int k = pst.executeUpdate();
+                        if (k == 1) {
+                            addTestClearButton();
+                            JOptionPane.showMessageDialog(this, "Test Addedd To add test Question go to Update test.");
+                            TestTable();
+                            listNumberOfQuestions.setText("0");
 
-                    int k = pst.executeUpdate();
-                    if (k == 1) {
-                        addTestClearButton();
-                        JOptionPane.showMessageDialog(this, "Test Addedd To add test Question go to Update test.");
-                        TestTable();
-                        listNumberOfQuestions.setText("0");
-
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Failed to Add Test!", "Error", JOptionPane.ERROR_MESSAGE);
+                            addTestClearButton();
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Failed to Add Test!", "Error", JOptionPane.ERROR_MESSAGE);
-                        addTestClearButton();
+                        JOptionPane.showMessageDialog(this, "Failed to Add Test you must have Subjects first!", "Error", JOptionPane.ERROR_MESSAGE);
+
                     }
+
                 } catch (SQLException ex) {
                     addTestClearButton();
                     JOptionPane.showMessageDialog(this, "Failed to Add Test!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -2334,10 +2339,10 @@ public class TeacherHome extends javax.swing.JFrame {
 
     private void TeacherReportStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeacherReportStudentActionPerformed
         // TODO add your handling code here:
-        
+
         setVisible(false);
         new TeacherReportStudent().setVisible(true);
-        
+
     }//GEN-LAST:event_TeacherReportStudentActionPerformed
 
     /**

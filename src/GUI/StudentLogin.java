@@ -364,7 +364,7 @@ public class StudentLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         setVisible(false);
-        new StudentSignIn().setVisible(true);
+        new StudentSignUp().setVisible(true);
 
     }//GEN-LAST:event_jLabel5MouseClicked
 

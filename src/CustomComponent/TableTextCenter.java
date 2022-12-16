@@ -32,9 +32,9 @@ public class TableTextCenter extends JTable {
     public void fixTable(JScrollPane scroll) {
         scroll.setVerticalScrollBar(new ScrollBarCustom());
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(30, 30, 30));
+        panel.setBackground(new Color(255, 255, 255));
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
-        scroll.getViewport().setBackground(new Color(30, 30, 30));
+        scroll.getViewport().setBackground(new Color(59, 90, 113));
         scroll.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 2));
     }
 
@@ -48,7 +48,7 @@ public class TableTextCenter extends JTable {
         @Override
         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
             Component com = super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
-            com.setBackground(new Color(30, 30, 30));
+            com.setBackground(new Color(45, 68, 86));
             com.setForeground(new Color(255, 255, 255));
             com.setFont(com.getFont().deriveFont(Font.BOLD, 12));
             setHorizontalAlignment(SwingConstants.CENTER);
@@ -64,7 +64,7 @@ public class TableTextCenter extends JTable {
             Component com = super.getTableCellRendererComponent(jtable, o, bln, bln1, row, column);
             if (isCellSelected(row, column)) {
 //                if (row % 2 == 0) {
-                com.setBackground(new Color(255, 44, 107));
+                com.setBackground(new Color(70, 202, 255));     //255, 44, 107
                 com.setForeground(new Color(255, 255, 255));
 
 //                } else {
@@ -75,14 +75,19 @@ public class TableTextCenter extends JTable {
                 if (row % 2 == 0) {
                     com.setBackground(new Color(50, 50, 50));
                 } else {
-                    com.setBackground(new Color(30, 30, 30));
+                    com.setBackground(new Color(91, 110, 128));   //91,110,128
                 }
             }
-            com.setForeground(new Color(200, 200, 200));
             setBorder(new EmptyBorder(0, 5, 0, 5));
             setHorizontalAlignment(SwingConstants.CENTER);
             return com;
         }
 
     }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
+    
 }

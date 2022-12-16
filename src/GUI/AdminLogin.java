@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import CustomComponent.PasswordField;
 import CustomComponent.RoundedJTextFieldTest;
 import ProjectApplication.DbConnection;
+import UsersClasses.Admin;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.*;
@@ -240,7 +241,7 @@ public class AdminLogin extends javax.swing.JFrame {
         Connection connection = dbConnection.ConnectDB();
 
         try {
-            PreparedStatement pst = connection.prepareStatement("Select username,password from Admin");
+            PreparedStatement pst = connection.prepareStatement("Select username,password,[name] from Admin");
             ResultSet rs = pst.executeQuery();
             boolean found = false;
 
@@ -249,6 +250,9 @@ public class AdminLogin extends javax.swing.JFrame {
                     setVisible(false);
                     new AdminHome().setVisible(true);
                     found = true;
+                    Admin.setUserName(txtAdminUserName.getText());
+                    Admin.setPassword(pwdAdmin.getText());
+                    Admin.setName(rs.getString(3));
                 }
             }
 
@@ -328,18 +332,17 @@ public class AdminLogin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AdminLogin().setVisible(true);
             }
         });
     }
-        String url = "jdbc:sqlserver://PANDETA:1433;"
-                + "database=Project;"
-                + "trustServerCertificate=true;"
-                + "integratedSecurity=true;";
-        DbConnection dbConnection = new DbConnection(url);
+    String url = "jdbc:sqlserver://PANDETA:1433;"
+            + "database=Project;"
+            + "trustServerCertificate=true;"
+            + "integratedSecurity=true;";
+    DbConnection dbConnection = new DbConnection(url);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox boxShowPwd;

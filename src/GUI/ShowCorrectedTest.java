@@ -169,16 +169,16 @@ public class ShowCorrectedTest extends javax.swing.JFrame {
         jPanel1.add(nextQuestionBotton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 500, 140, 50));
 
         ans4Correct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/accept.png"))); // NOI18N
-        jPanel1.add(ans4Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 420, -1, 40));
+        jPanel1.add(ans4Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, -1, 40));
 
         ans1Correct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/accept.png"))); // NOI18N
-        jPanel1.add(ans1Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, -1, 40));
+        jPanel1.add(ans1Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, 40));
 
         ans2Correct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/accept.png"))); // NOI18N
-        jPanel1.add(ans2Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, -1, 40));
+        jPanel1.add(ans2Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, 40));
 
         ans3Correct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/accept.png"))); // NOI18N
-        jPanel1.add(ans3Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, -1, 40));
+        jPanel1.add(ans3Correct, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, -1, 40));
 
         jLabel3.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));

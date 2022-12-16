@@ -1,11 +1,8 @@
 package UsersClasses;
 
-public class Student {
+public class Student extends User{
 
-    private static int ID;
-    private static String name;
-    private static String email;
-    private static String password;
+
     private static String phoneNumber;
     private static int age;
     private static String subject1;
@@ -13,47 +10,15 @@ public class Student {
     private static String subject3;
 
     public Student(int ID, String name, String email, String phoneNumber, int age, String subject1, String subject2, String subject3,String password) {
-        this.ID = ID;
-        this.name = name;
+        super.id = ID;
+        super.name = name;
         this.age = age;
-        this.email = email;
+        super.email = email;
         this.phoneNumber = phoneNumber;
-        this.password = password;
+        super.password = password;
         this.subject1 = subject1;
         this.subject2 = subject2;
         this.subject3 = subject3;
-    }
-
-    public static int getID() {
-        return ID;
-    }
-
-    public static void setID(int ID1) {
-        ID = ID1;
-    }
-
-    public static String getName() {
-        return name;
-    }
-
-    public static void setName(String name1) {
-        name = name1;
-    }
-
-    public static String getEmail() {
-        return email;
-    }
-
-    public static void setEmail(String email1) {
-        email = email1;
-    }
-
-    public static String getPassword() {
-        return password;
-    }
-
-    public static void setPassword(String password1) {
-        password = password1;
     }
     
     public static String getPhoneNumber() {

@@ -17,11 +17,11 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class StudentSignIn extends javax.swing.JFrame {
+public class StudentSignUp extends javax.swing.JFrame {
 
     DbConnection dbConnection = new DbConnection();
 
-    public StudentSignIn() {
+    public StudentSignUp() {
         initComponents();
         getContentPane().setBackground(Color.white);                                                 // set new background color
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 15, 15));
@@ -611,11 +611,13 @@ public class StudentSignIn extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_studentAgeActionPerformed
 
-    private void goBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackButtonActionPerformed
+    public void goBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackButtonActionPerformed
         // TODO add your handling code here:
 
-        setVisible(false);
-        new StudentLogin().setVisible(true);
+            setVisible(false);
+            new StudentLogin().setVisible(true);
+
+        
     }//GEN-LAST:event_goBackButtonActionPerformed
 
     private void studentPhoneNumberFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_studentPhoneNumberFocusGained
@@ -682,20 +684,21 @@ public class StudentSignIn extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StudentSignIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentSignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StudentSignIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentSignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StudentSignIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentSignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StudentSignIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentSignUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StudentSignIn().setVisible(true);
+                new StudentSignUp().setVisible(true);
             }
         });
     }
@@ -734,14 +737,14 @@ public class StudentSignIn extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox boxShowPwd;
     private javax.swing.JButton closeApplication;
-    private javax.swing.JButton goBackButton;
+    public javax.swing.JButton goBackButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel4;
+    public javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField studentAge;
