@@ -37,6 +37,8 @@ public class AdminHome extends javax.swing.JFrame {
                 studentEnabled(false);
                 if (isLoggedIn()) {
                     jLabel2.setText("Welcome " + Admin.getName());
+                    adminUserName.setText(Admin.getUserName());
+                    adminName.setText(Admin.getName());
                 } else {
                     jLabel2.setText("Admin");
                 }
@@ -176,6 +178,16 @@ public class AdminHome extends javax.swing.JFrame {
         addTeacher = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        adminUserName = new CustomComponent.ReadField(50);
+        jLabel5 = new javax.swing.JLabel();
+        adminName = new CustomComponent.ReadField(50);
+        UpdateName2 = new RoundedJTextFieldTest(50);
+        UpdatepwdTeacherRewrite2 = new PasswordField(50);
+        UpdatepwdTeacher2 = new PasswordField(50);
+        boxShowPwd2 = new javax.swing.JCheckBox();
+        updateUserName = new RoundedJTextFieldTest(50);
+        updateAdmin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1366, 800));
@@ -744,16 +756,151 @@ public class AdminHome extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("tab3", jPanel3);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1670, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 569, Short.MAX_VALUE)
-        );
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(45, 68, 86));
+        jLabel6.setText("UserName");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, -1, -1));
+
+        adminUserName.setBackground(new java.awt.Color(45, 68, 86));
+        adminUserName.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        adminUserName.setForeground(new java.awt.Color(255, 255, 255));
+        adminUserName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        adminUserName.setText("UserName");
+        adminUserName.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        adminUserName.setFocusable(false);
+        adminUserName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                adminUserNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                adminUserNameFocusLost(evt);
+            }
+        });
+        jPanel4.add(adminUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, 380, 60));
+
+        jLabel5.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(45, 68, 86));
+        jLabel5.setText("Name");
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 60, 50, -1));
+
+        adminName.setBackground(new java.awt.Color(45, 68, 86));
+        adminName.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        adminName.setForeground(new java.awt.Color(255, 255, 255));
+        adminName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        adminName.setText("Name");
+        adminName.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        adminName.setFocusable(false);
+        adminName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                adminNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                adminNameFocusLost(evt);
+            }
+        });
+        jPanel4.add(adminName, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 80, 380, 60));
+
+        UpdateName2.setBackground(new java.awt.Color(45, 68, 86));
+        UpdateName2.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        UpdateName2.setForeground(new java.awt.Color(102, 102, 102));
+        UpdateName2.setText("Change Name");
+        UpdateName2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                UpdateName2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                UpdateName2FocusLost(evt);
+            }
+        });
+        UpdateName2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateName2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(UpdateName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, 470, 70));
+
+        UpdatepwdTeacherRewrite2.setBackground(new java.awt.Color(45, 68, 86));
+        UpdatepwdTeacherRewrite2.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        UpdatepwdTeacherRewrite2.setForeground(new java.awt.Color(102, 102, 102));
+        UpdatepwdTeacherRewrite2.setText("New Password");
+        UpdatepwdTeacherRewrite2.setEchoChar('\u0000');
+        UpdatepwdTeacherRewrite2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                UpdatepwdTeacherRewrite2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                UpdatepwdTeacherRewrite2FocusLost(evt);
+            }
+        });
+        UpdatepwdTeacherRewrite2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdatepwdTeacherRewrite2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(UpdatepwdTeacherRewrite2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 230, 70));
+
+        UpdatepwdTeacher2.setBackground(new java.awt.Color(45, 68, 86));
+        UpdatepwdTeacher2.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        UpdatepwdTeacher2.setForeground(new java.awt.Color(102, 102, 102));
+        UpdatepwdTeacher2.setText("Rewrite Password");
+        UpdatepwdTeacher2.setEchoChar('\u0000');
+        UpdatepwdTeacher2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                UpdatepwdTeacher2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                UpdatepwdTeacher2FocusLost(evt);
+            }
+        });
+        UpdatepwdTeacher2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdatepwdTeacher2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(UpdatepwdTeacher2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 360, 230, 70));
+
+        boxShowPwd2.setFont(new java.awt.Font("Lato", 1, 14)); // NOI18N
+        boxShowPwd2.setForeground(new java.awt.Color(45, 68, 86));
+        boxShowPwd2.setText("Show Password");
+        boxShowPwd2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxShowPwd2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(boxShowPwd2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 440, -1, -1));
+
+        updateUserName.setBackground(new java.awt.Color(45, 68, 86));
+        updateUserName.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        updateUserName.setForeground(new java.awt.Color(102, 102, 102));
+        updateUserName.setText("Change UserName");
+        updateUserName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                updateUserNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                updateUserNameFocusLost(evt);
+            }
+        });
+        updateUserName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateUserNameActionPerformed(evt);
+            }
+        });
+        jPanel4.add(updateUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, 470, 70));
+
+        updateAdmin.setBackground(new java.awt.Color(12, 69, 92));
+        updateAdmin.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        updateAdmin.setForeground(new java.awt.Color(255, 255, 255));
+        updateAdmin.setText("Update");
+        updateAdmin.setIconTextGap(15);
+        updateAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateAdminActionPerformed(evt);
+            }
+        });
+        jPanel4.add(updateAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 470, 150, 60));
 
         jTabbedPane2.addTab("tab4", jPanel4);
 
@@ -1356,7 +1503,7 @@ public class AdminHome extends javax.swing.JFrame {
         String sub1 = UpdateSubject4.getSelectedItem().toString();
         String sub2 = UpdateSubject5.getSelectedItem().toString();
         String sub3 = UpdateSubject6.getSelectedItem().toString();
-        
+
         System.out.println(sub1);
         System.out.println(sub2);
         System.out.println(sub3);
@@ -1463,7 +1610,7 @@ public class AdminHome extends javax.swing.JFrame {
                         TeacherTable();
                         setDefaultT();
                         teacherEnabled(false);
-                        
+
                         ImageIcon image = new ImageIcon(getClass().getResource("/Images/admin (1).png"));
                         JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Update Done Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
 
@@ -1527,8 +1674,8 @@ public class AdminHome extends javax.swing.JFrame {
 
     private void deleteTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTeacherActionPerformed
         // TODO add your handling code here:
-        
-         if (isLoggedIn()) {
+
+        if (isLoggedIn()) {
             String[] options = {"Yes", "No"};
 
             ImageIcon imageExclamation = new ImageIcon(getClass().getResource("/Images/exclamation-mark.png"));
@@ -1574,16 +1721,267 @@ public class AdminHome extends javax.swing.JFrame {
 
             }
         }
-        
+
     }//GEN-LAST:event_deleteTeacherActionPerformed
 
     private void addTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeacherActionPerformed
         // TODO add your handling code here:
-        
+
         setVisible(false);
-        new AdminAddStudent().setVisible(true);
-        
+        new AdminAddTeacher().setVisible(true);
+
     }//GEN-LAST:event_addTeacherActionPerformed
+
+    private void adminUserNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_adminUserNameFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adminUserNameFocusGained
+
+    private void adminUserNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_adminUserNameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adminUserNameFocusLost
+
+    private void adminNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_adminNameFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adminNameFocusGained
+
+    private void adminNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_adminNameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adminNameFocusLost
+
+    private void UpdateName2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UpdateName2FocusGained
+        // TODO add your handling code here:
+
+        if (UpdateName2.getText().equals("Change Name")) {
+            UpdateName2.setText("");
+            UpdateName2.setForeground(Color.white);
+        }
+
+
+    }//GEN-LAST:event_UpdateName2FocusGained
+
+    private void UpdateName2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UpdateName2FocusLost
+        // TODO add your handling code here:
+
+        if (UpdateName2.getText().equals("")) {
+            UpdateName2.setText("Change Name");
+            UpdateName2.setForeground(new Color(102, 102, 102));
+        }
+
+    }//GEN-LAST:event_UpdateName2FocusLost
+
+    private void UpdateName2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateName2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UpdateName2ActionPerformed
+
+    private void UpdatepwdTeacherRewrite2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UpdatepwdTeacherRewrite2FocusGained
+        // TODO add your handling code here:
+
+        if (UpdatepwdTeacherRewrite2.getText().equals("New Password")) {
+            UpdatepwdTeacherRewrite2.setText("");
+            UpdatepwdTeacherRewrite2.setForeground(Color.white);
+            if (!boxShowPwd2.isSelected()) {
+                UpdatepwdTeacherRewrite2.setEchoChar('\u2022');
+            }
+        }
+
+    }//GEN-LAST:event_UpdatepwdTeacherRewrite2FocusGained
+
+    private void UpdatepwdTeacherRewrite2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UpdatepwdTeacherRewrite2FocusLost
+        // TODO add your handling code here:
+
+        if (UpdatepwdTeacherRewrite2.getText().equals("")) {
+            UpdatepwdTeacherRewrite2.setEchoChar('\u0000');
+            UpdatepwdTeacherRewrite2.setText("New Password");
+            UpdatepwdTeacherRewrite2.setForeground(new Color(102, 102, 102));
+        }
+
+    }//GEN-LAST:event_UpdatepwdTeacherRewrite2FocusLost
+
+    private void UpdatepwdTeacherRewrite2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdatepwdTeacherRewrite2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UpdatepwdTeacherRewrite2ActionPerformed
+
+    private void UpdatepwdTeacher2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UpdatepwdTeacher2FocusGained
+        // TODO add your handling code here:
+
+        if (UpdatepwdTeacher2.getText().equals("Rewrite Password")) {
+            UpdatepwdTeacher2.setText("");
+            UpdatepwdTeacher2.setForeground(Color.white);
+            if (!boxShowPwd2.isSelected()) {
+                UpdatepwdTeacher2.setEchoChar('\u2022');
+            }
+        }
+
+
+    }//GEN-LAST:event_UpdatepwdTeacher2FocusGained
+
+    private void UpdatepwdTeacher2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UpdatepwdTeacher2FocusLost
+        // TODO add your handling code here:
+
+        if (UpdatepwdTeacher2.getText().equals("")) {
+            UpdatepwdTeacher2.setEchoChar('\u0000');
+            UpdatepwdTeacher2.setText("Rewrite Password");
+            UpdatepwdTeacher2.setForeground(new Color(102, 102, 102));
+        }
+
+    }//GEN-LAST:event_UpdatepwdTeacher2FocusLost
+
+    private void UpdatepwdTeacher2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdatepwdTeacher2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UpdatepwdTeacher2ActionPerformed
+
+    private void boxShowPwd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxShowPwd2ActionPerformed
+        // TODO add your handling code here:
+
+        if (!(UpdatepwdTeacher2.getText().equals("Rewrite Password"))) {
+            if (boxShowPwd2.isSelected()) {
+                UpdatepwdTeacher2.setEchoChar((char) 0);
+            } else {
+                UpdatepwdTeacher2.setEchoChar('\u2022');
+            }
+        }
+        if (!(UpdatepwdTeacherRewrite2.getText().equals("New Password"))) {
+            if (boxShowPwd2.isSelected()) {
+                UpdatepwdTeacherRewrite2.setEchoChar((char) 0);
+            } else {
+                UpdatepwdTeacherRewrite2.setEchoChar('\u2022');
+            }
+        }
+
+    }//GEN-LAST:event_boxShowPwd2ActionPerformed
+
+    private void updateUserNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_updateUserNameFocusGained
+        // TODO add your handling code here:
+
+        if (updateUserName.getText().equals("Change UserName")) {
+            updateUserName.setText("");
+            updateUserName.setForeground(Color.white);
+        }
+
+    }//GEN-LAST:event_updateUserNameFocusGained
+
+    private void updateUserNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_updateUserNameFocusLost
+        // TODO add your handling code here:
+
+        if (updateUserName.getText().equals("")) {
+            updateUserName.setText("Change UserName");
+            updateUserName.setForeground(new Color(102, 102, 102));
+        }
+
+    }//GEN-LAST:event_updateUserNameFocusLost
+
+    private void updateUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateUserNameActionPerformed
+
+    private void updateAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateAdminActionPerformed
+        // TODO add your handling code here:
+
+        String newName = UpdateName2.getText().trim().equals("Change Name") ? "" : UpdateName2.getText().trim();
+        newName = UpdateName2.getText().trim().length() < 3 || !UpdateName2.getText().trim().matches("[a-zA-Z]*|[a-zA-Z]*\\s[a-zA-Z]*") ? "wrong input" : newName;
+
+        String newUserName = updateUserName.getText().trim().length() > 5 ? updateUserName.getText().trim() : "wrong UserName";
+
+        String newPassword = !UpdatepwdTeacher2.getText().trim().equals("Rewrite Password") ? UpdatepwdTeacher2.getText().trim() : "";
+        newPassword = UpdatepwdTeacher2.getText().trim().length() > 5 ? newPassword : "wrong Password";
+
+        String newPasswordRewrite = !UpdatepwdTeacherRewrite2.getText().trim().equals("New Password") ? UpdatepwdTeacherRewrite2.getText().trim() : "";
+        newPasswordRewrite = UpdatepwdTeacherRewrite2.getText().trim().length() > 5 ? newPasswordRewrite : "wrong Password";
+
+        boolean cheak = true;
+
+        if (newName.equals("")) {
+            newName = Admin.getName();
+
+        }
+        if (newName.equals("wrong input")) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Name Field make sure that<br>the name is more than 3 character with no numbers<br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            cheak = false;
+
+        }
+        if (newPassword.equals("wrong Password")) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the password Field make sure that<br>the password is at least 6 characters <br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            cheak = false;
+
+        }
+        if (!newPassword.equals(newPasswordRewrite)) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the password Field make sure that<br>the 2 password field is exactly the same!<br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            cheak = false;
+
+        }
+        if (newUserName.equals("wrong UserName")) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the UserName Field make sure that<br>the UserName length is more than 3 characters!<br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            cheak = false;
+        }
+
+        if (cheak) {
+            System.out.println("aaaaaa");
+
+            try {
+                boolean emailCheck = true;
+                Connection connection = dbConnection.ConnectDB();
+                PreparedStatement pst;
+                pst = connection.prepareStatement("Select username from Admin");
+
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    if (newUserName.toLowerCase().equals(rs.getString(1))) {
+                        emailCheck = false;
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">This UserName is already been taken!<br>if you need to leave the UserName as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+                    }
+
+                    //                System.out.println(Arrays.toString(rows));
+                }
+
+                if (emailCheck) {
+                    if (newUserName.equals("Change UserName")) {
+                        newUserName = Admin.getUserName();
+                    }
+                    pst = connection.prepareStatement("update admin set username = ?, name = ?, password = ? where username = ?");
+                    pst.setString(1, newUserName.toLowerCase());
+                    pst.setString(2, newName);
+                    Admin.setName(newName);
+                    if (newPassword.equals("")) {
+                        pst.setString(3, Admin.getPassword());
+                    } else {
+                        pst.setString(3, newPassword);
+                        Admin.setPassword(newPassword);
+                    }
+                    pst.setString(4, Admin.getUserName());
+
+                    int k = pst.executeUpdate();
+                    if (k == 1) {
+                        Admin.setUserName(newUserName.toLowerCase());
+                        adminUserName.setText(Admin.getUserName());
+                        adminName.setText(Admin.getName());
+
+                        if (updateUserName.getText().equals("Change UserName") && UpdateName2.getText().equals("Change Name") && UpdatepwdTeacherRewrite2.getText().equals("New Password") && UpdatepwdTeacher2.getText().equals("Rewrite Password")) {
+                            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Nothing Updated!</p></html>", "Warning!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                        } else {
+                            ImageIcon image = new ImageIcon(getClass().getResource("/Images/admin (1).png"));
+                            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Update Done Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                        }
+
+                    }
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+        }
+
+
+    }//GEN-LAST:event_updateAdminActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1737,6 +2135,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JTextField UpdateEmail1;
     private javax.swing.JTextField UpdateName;
     private javax.swing.JTextField UpdateName1;
+    private javax.swing.JTextField UpdateName2;
     private javax.swing.JComboBox<String> UpdateSubject1;
     private javax.swing.JComboBox<String> UpdateSubject2;
     private javax.swing.JComboBox<String> UpdateSubject3;
@@ -1746,15 +2145,20 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JButton UpdateTeacherButton;
     private javax.swing.JPasswordField UpdatepwdTeacher;
     private javax.swing.JPasswordField UpdatepwdTeacher1;
+    private javax.swing.JPasswordField UpdatepwdTeacher2;
     private javax.swing.JPasswordField UpdatepwdTeacherRewrite;
     private javax.swing.JPasswordField UpdatepwdTeacherRewrite1;
+    private javax.swing.JPasswordField UpdatepwdTeacherRewrite2;
     private javax.swing.JButton addStudent;
     private javax.swing.JButton addTeacher;
+    private javax.swing.JTextField adminName;
+    private javax.swing.JTextField adminUserName;
     private javax.swing.JButton alterStudents;
     private javax.swing.JButton alterSubjects;
     private javax.swing.JButton alterTeacher;
     private javax.swing.JCheckBox boxShowPwd;
     private javax.swing.JCheckBox boxShowPwd1;
+    private javax.swing.JCheckBox boxShowPwd2;
     private javax.swing.JButton closeApplication;
     private javax.swing.JButton deleteStudent;
     private javax.swing.JButton deleteTeacher;
@@ -1769,6 +2173,8 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -1784,8 +2190,10 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JButton profile;
     private CustomComponent.TableTextCenter studentTable;
     private CustomComponent.TableTextCenter teacherTable;
+    private javax.swing.JButton updateAdmin;
     private javax.swing.JTextField updateAge;
     private javax.swing.JTextField updatePhoneNumber;
     private javax.swing.JButton updateStudent;
+    private javax.swing.JTextField updateUserName;
     // End of variables declaration//GEN-END:variables
 }

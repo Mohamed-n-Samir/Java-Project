@@ -246,11 +246,11 @@ public class AdminLogin extends javax.swing.JFrame {
             boolean found = false;
 
             while (rs.next()) {
-                if (rs.getString(1).equals(txtAdminUserName.getText()) && rs.getString(2).equals(pwdAdmin.getText())) {
+                if (rs.getString(1).toLowerCase().equals(txtAdminUserName.getText().toLowerCase()) && rs.getString(2).equals(pwdAdmin.getText())) {
                     setVisible(false);
                     new AdminHome().setVisible(true);
                     found = true;
-                    Admin.setUserName(txtAdminUserName.getText());
+                    Admin.setUserName(txtAdminUserName.getText().toLowerCase());
                     Admin.setPassword(pwdAdmin.getText());
                     Admin.setName(rs.getString(3));
                 }

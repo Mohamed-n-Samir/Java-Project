@@ -26,7 +26,7 @@ public class AdminAddTeacher extends javax.swing.JFrame {
         addWindowListener(new WindowAdapter() {                                                        // make auto focus on username field
             @Override
             public void windowOpened(WindowEvent e) {
-
+                getSubjects();
             }
         });
     }
@@ -54,7 +54,9 @@ public class AdminAddTeacher extends javax.swing.JFrame {
         studentSignIn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(600, 640));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(600, 640));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         teacherSubject1.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
@@ -501,6 +503,37 @@ public class AdminAddTeacher extends javax.swing.JFrame {
         } else {
             return false;
         }
+    }
+
+    private void getSubjects() {
+
+        try {
+            Connection connection = dbConnection.ConnectDB();
+            PreparedStatement pst;
+            pst = connection.prepareStatement("Select * from Subject ");
+
+            ResultSet rs = pst.executeQuery();
+
+            Object[] rows = new Object[]{"NONE"};
+
+            int counter = 1;       // make sure that the counter is equal to the Strings in side the rows[];
+            while (rs.next()) {
+                Object[] temp = new Object[rows.length + 1];
+                System.arraycopy(rows, 0, temp, 0, rows.length);
+                rows = temp;
+                rows[counter] = rs.getString(1);
+                counter++;
+//                System.out.println(Arrays.toString(rows));
+            }
+            teacherSubject1.setModel(new javax.swing.DefaultComboBoxModel(rows));
+            teacherSubject2.setModel(new javax.swing.DefaultComboBoxModel(rows));
+            teacherSubject3.setModel(new javax.swing.DefaultComboBoxModel(rows));
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(AdminAddStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
