@@ -23,6 +23,8 @@ import UsersClasses.Teacher;
 public class AdminHome extends javax.swing.JFrame {
 
     DbConnection dbConnection = new DbConnection();
+    String subjectCode1;
+    String subjectName1;
 
     public AdminHome() {
         initComponents();
@@ -35,6 +37,8 @@ public class AdminHome extends javax.swing.JFrame {
                 teacherEnabled(false);
                 getAllSubs();
                 studentEnabled(false);
+                subjectEnabled(false);
+
                 if (isLoggedIn()) {
                     jLabel2.setText("Welcome " + Admin.getName());
                     adminUserName.setText(Admin.getUserName());
@@ -44,6 +48,7 @@ public class AdminHome extends javax.swing.JFrame {
                 }
                 StudentTable();
                 TeacherTable();
+                SubjectTable();
 
             }
         });
@@ -120,6 +125,41 @@ public class AdminHome extends javax.swing.JFrame {
 
     }
 
+    public void SubjectTable() {
+        try {
+            Connection connection = dbConnection.getConnection();
+
+            PreparedStatement pst;
+            pst = connection.prepareStatement("select * from Subject");
+
+            ResultSet rs = pst.executeQuery();
+            ResultSetMetaData RSM = rs.getMetaData();
+
+            int c;
+            c = RSM.getColumnCount();
+
+            DefaultTableModel DF = (DefaultTableModel) subjectTable.getModel();
+            DF.setRowCount(0);
+            String[] colName = new String[c];
+            for (int i = 0; i < c; i++) {
+                colName[i] = RSM.getColumnName(i + 1);
+            }
+            DF.setColumnIdentifiers(colName);
+
+            Object[] rows;
+            while (rs.next()) {
+
+                DF.addRow(rows = new Object[]{rs.getString(1), rs.getString(2)});
+
+            }
+            subjectTable.fixTable(jScrollPane3);
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(TeacherHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -177,6 +217,17 @@ public class AdminHome extends javax.swing.JFrame {
         deleteTeacher = new javax.swing.JButton();
         addTeacher = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        subjectTable = new CustomComponent.TableTextCenter();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField3 = new RoundedJTextFieldTest(500);
+        updateSubject = new javax.swing.JButton();
+        deleteSubject = new javax.swing.JButton();
+        addSubject = new javax.swing.JButton();
+        updateSubjectName = new RoundedJTextFieldTest(50);
+        updateSubjectCode = new RoundedJTextFieldTest(50);
+        subjectName = new RoundedJTextFieldTest(50);
+        subjectCode = new RoundedJTextFieldTest(50);
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         adminUserName = new CustomComponent.ReadField(50);
@@ -743,16 +794,148 @@ public class AdminHome extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("tab2", jPanel2);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1670, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 569, Short.MAX_VALUE)
-        );
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        subjectTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        subjectTable.getTableHeader().setReorderingAllowed(false);
+        subjectTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                subjectTableMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(subjectTable);
+
+        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 670, 440));
+
+        jLabel7.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        jLabel7.setText("Search Subject :  ");
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 490, -1, 50));
+
+        jTextField3.setFont(new java.awt.Font("Lato", 0, 14)); // NOI18N
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
+        });
+        jPanel3.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 490, 240, 50));
+
+        updateSubject.setBackground(new java.awt.Color(12, 69, 92));
+        updateSubject.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        updateSubject.setForeground(new java.awt.Color(255, 255, 255));
+        updateSubject.setText("Update");
+        updateSubject.setIconTextGap(15);
+        updateSubject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateSubjectActionPerformed(evt);
+            }
+        });
+        jPanel3.add(updateSubject, new org.netbeans.lib.awtextra.AbsoluteConstraints(1440, 180, 190, 60));
+
+        deleteSubject.setBackground(new java.awt.Color(255, 44, 107));
+        deleteSubject.setFont(new java.awt.Font("Lato", 2, 18)); // NOI18N
+        deleteSubject.setForeground(new java.awt.Color(255, 255, 255));
+        deleteSubject.setText("Delete");
+        deleteSubject.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteSubject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteSubjectActionPerformed(evt);
+            }
+        });
+        jPanel3.add(deleteSubject, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 180, 190, 60));
+
+        addSubject.setBackground(new java.awt.Color(102, 102, 102));
+        addSubject.setFont(new java.awt.Font("Lato", 2, 18)); // NOI18N
+        addSubject.setForeground(new java.awt.Color(255, 255, 255));
+        addSubject.setText("Add Subject");
+        addSubject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSubjectActionPerformed(evt);
+            }
+        });
+        jPanel3.add(addSubject, new org.netbeans.lib.awtextra.AbsoluteConstraints(1440, 470, 190, 60));
+
+        updateSubjectName.setBackground(new java.awt.Color(45, 68, 86));
+        updateSubjectName.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        updateSubjectName.setForeground(new java.awt.Color(102, 102, 102));
+        updateSubjectName.setText("Update Subject Name");
+        updateSubjectName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                updateSubjectNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                updateSubjectNameFocusLost(evt);
+            }
+        });
+        updateSubjectName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateSubjectNameActionPerformed(evt);
+            }
+        });
+        jPanel3.add(updateSubjectName, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 100, 590, 70));
+
+        updateSubjectCode.setBackground(new java.awt.Color(45, 68, 86));
+        updateSubjectCode.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        updateSubjectCode.setForeground(new java.awt.Color(102, 102, 102));
+        updateSubjectCode.setText("Update Subject Code");
+        updateSubjectCode.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                updateSubjectCodeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                updateSubjectCodeFocusLost(evt);
+            }
+        });
+        updateSubjectCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateSubjectCodeActionPerformed(evt);
+            }
+        });
+        jPanel3.add(updateSubjectCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 20, 590, 70));
+
+        subjectName.setBackground(new java.awt.Color(45, 68, 86));
+        subjectName.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        subjectName.setForeground(new java.awt.Color(102, 102, 102));
+        subjectName.setText("Subject Name");
+        subjectName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                subjectNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                subjectNameFocusLost(evt);
+            }
+        });
+        subjectName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subjectNameActionPerformed(evt);
+            }
+        });
+        jPanel3.add(subjectName, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 390, 590, 70));
+
+        subjectCode.setBackground(new java.awt.Color(45, 68, 86));
+        subjectCode.setFont(new java.awt.Font("Lato", 0, 18)); // NOI18N
+        subjectCode.setForeground(new java.awt.Color(102, 102, 102));
+        subjectCode.setText("Subject Code");
+        subjectCode.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                subjectCodeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                subjectCodeFocusLost(evt);
+            }
+        });
+        subjectCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subjectCodeActionPerformed(evt);
+            }
+        });
+        jPanel3.add(subjectCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 310, 590, 70));
 
         jTabbedPane2.addTab("tab3", jPanel3);
 
@@ -1158,9 +1341,27 @@ public class AdminHome extends javax.swing.JFrame {
                     pst.setInt(4, sdAge);
                     pst.setString(5, phoneNum);
 
-                    pst.setString(6, UpdateSubject1.getSelectedItem().toString());
-                    pst.setString(7, UpdateSubject2.getSelectedItem().toString());
-                    pst.setString(8, UpdateSubject3.getSelectedItem().toString());
+                    if (UpdateSubject1.getSelectedItem().toString().equals("NONE")) {
+                        pst.setNull(6, Types.NVARCHAR);
+                    } else {
+
+                        pst.setString(6, UpdateSubject1.getSelectedItem().toString());
+                    }
+
+                    if (UpdateSubject2.getSelectedItem().toString().equals("NONE")) {
+                        pst.setNull(7, Types.NVARCHAR);
+                    } else {
+
+                        pst.setString(7, UpdateSubject2.getSelectedItem().toString());
+                    }
+
+                    if (UpdateSubject3.getSelectedItem().toString().equals("NONE")) {
+                        pst.setNull(8, Types.NVARCHAR);
+                    } else {
+
+                        pst.setString(8, UpdateSubject3.getSelectedItem().toString());
+                    }
+
                     pst.setInt(9, Student.getID());
                     int k = pst.executeUpdate();
                     if (k == 1) {
@@ -1880,7 +2081,7 @@ public class AdminHome extends javax.swing.JFrame {
         String newName = UpdateName2.getText().trim().equals("Change Name") ? "" : UpdateName2.getText().trim();
         newName = UpdateName2.getText().trim().length() < 3 || !UpdateName2.getText().trim().matches("[a-zA-Z]*|[a-zA-Z]*\\s[a-zA-Z]*") ? "wrong input" : newName;
 
-        String newUserName = updateUserName.getText().trim().length() > 5 ? updateUserName.getText().trim() : "wrong UserName";
+        String newUserName = updateUserName.getText().trim().length() > 4 ? updateUserName.getText().trim() : "wrong UserName";
 
         String newPassword = !UpdatepwdTeacher2.getText().trim().equals("Rewrite Password") ? UpdatepwdTeacher2.getText().trim() : "";
         newPassword = UpdatepwdTeacher2.getText().trim().length() > 5 ? newPassword : "wrong Password";
@@ -1960,6 +2161,7 @@ public class AdminHome extends javax.swing.JFrame {
                         Admin.setUserName(newUserName.toLowerCase());
                         adminUserName.setText(Admin.getUserName());
                         adminName.setText(Admin.getName());
+                        jLabel2.setText(Admin.getName());
 
                         if (updateUserName.getText().equals("Change UserName") && UpdateName2.getText().equals("Change Name") && UpdatepwdTeacherRewrite2.getText().equals("New Password") && UpdatepwdTeacher2.getText().equals("Rewrite Password")) {
                             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
@@ -1982,6 +2184,331 @@ public class AdminHome extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_updateAdminActionPerformed
+
+    private void subjectTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subjectTableMouseClicked
+        // TODO add your handling code here:
+
+        subjectEnabled(true);
+
+        updateSubjectCode.setForeground(Color.white);
+
+        updateSubjectName.setForeground(Color.white);
+        int SelectIndex = subjectTable.getSelectedRow();
+        String subCode = subjectTable.getValueAt(SelectIndex, 0).toString();
+        String subName = subjectTable.getValueAt(SelectIndex, 1).toString();
+
+        updateSubjectCode.setText(subCode);
+        updateSubjectName.setText(subName);
+        subjectCode1 = subCode;
+        subjectName1 = subName;
+
+    }//GEN-LAST:event_subjectTableMouseClicked
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        // TODO add your handling code here:
+
+        DefaultTableModel table = (DefaultTableModel) subjectTable.getModel();
+        String search = jTextField3.getText();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(table);
+        subjectTable.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(search));
+
+    }//GEN-LAST:event_jTextField3KeyReleased
+
+    private void updateSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateSubjectActionPerformed
+        // TODO add your handling code here:
+        System.out.println(subjectCode1);
+        String subCode = updateSubjectCode.getText().trim().length() > 3 ? updateSubjectCode.getText().trim() : "";
+        String subName = updateSubjectName.getText().trim().length() > 3 ? updateSubjectName.getText().trim() : "";
+
+        boolean check = true;
+
+        if (subCode.equals("")) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">The subCode Must be More than 3 characters!<br>if you need to leave the subCode as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            check = false;
+        } else if (subName.equals("")) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">The subName Must be More than 3 characters!<br>if you need to leave the subName as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            check = false;
+        }
+
+        if (check) {
+            try {
+                boolean codeCheck = true;
+                Connection connection = dbConnection.ConnectDB();
+                PreparedStatement pst;
+                pst = connection.prepareStatement("Select code from Subject");
+
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    if (subCode.equals(rs.getString(1))) {
+                        codeCheck = false;
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">This subCode is already been taken!<br>if you need to leave the subCode as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+                    }
+                }
+
+                if (subCode.equals("Update Subject Code")) {
+                    subCode = subjectCode1;
+                }
+                if (subName.equals("Update Subject Name")) {
+                    subName = subjectName1;
+                }
+
+                if (codeCheck) {
+
+                    pst = connection.prepareStatement("update Subject set code = ?, [name] = ? where code = ?");
+                    pst.setString(1, subCode);
+                    pst.setString(2, subName);
+                    pst.setString(3, subjectCode1);
+                    int k = pst.executeUpdate();
+                    if (k == 1) {
+
+                        if (updateSubjectCode.getText().equals("Update Subject Code") && updateSubjectName.getText().equals("Update Subject Name")) {
+                            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Nothing Updated!</p></html>", "Warning!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                        } else {
+                            ImageIcon image = new ImageIcon(getClass().getResource("/Images/admin (1).png"));
+                            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Update Done Successfully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                        }
+                        setDefaultSub();
+                        subjectEnabled(false);
+                        SubjectTable();
+
+                    }
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+
+        }
+
+
+    }//GEN-LAST:event_updateSubjectActionPerformed
+
+    private void deleteSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSubjectActionPerformed
+        // TODO add your handling code here:
+
+        String[] options = {"Yes", "No"};
+
+        ImageIcon imageExclamation = new ImageIcon(getClass().getResource("/Images/exclamation-mark.png"));
+        int a = JOptionPane.showOptionDialog(this, "Are you sure that you want to delete this Subject?", "Delete Alert!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, imageExclamation, options, 0);
+        if (a == 0) {
+            try {
+
+                Connection connection = dbConnection.ConnectDB();
+                PreparedStatement pst;
+
+                pst = connection.prepareStatement("delete from [Subject] where code = ?");
+
+                pst.setString(1, subjectCode1);
+                int k = pst.executeUpdate();
+                if (k == 1) {
+                    setDefaultSub();
+                    subjectEnabled(false);
+                    SubjectTable();
+
+                    ImageIcon image = new ImageIcon(getClass().getResource("/Images/admin (1).png"));
+                    JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Successefully Deleted!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+        }
+
+
+    }//GEN-LAST:event_deleteSubjectActionPerformed
+
+    private void addSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSubjectActionPerformed
+        // TODO add your handling code here:
+
+        String subCode = subjectCode.getText().trim().length() > 3 ? subjectCode.getText().trim() : "";
+        String subName = subjectName.getText().trim().length() > 3 ? subjectName.getText().trim() : "";
+
+        boolean check = true;
+
+        if (subCode.equals("")) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">The subCode Must be More than 3 characters!<br>if you need to leave the subCode as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            check = false;
+        } else if (subName.equals("")) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">The subName Must be More than 3 characters!<br>if you need to leave the subName as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            check = false;
+        }
+
+        if (check) {
+            try {
+                boolean codeCheck = true;
+                Connection connection = dbConnection.ConnectDB();
+                PreparedStatement pst;
+                pst = connection.prepareStatement("Select code from Subject");
+
+                ResultSet rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    if (subCode.equals(rs.getString(1))) {
+                        codeCheck = false;
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">This subCode is already been taken!<br>if you need to leave the subCode as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+                    }
+                }
+
+                if (subCode.equals("Subject Code")) {
+                    subCode = "";
+                }
+                if (subName.equals("Subject Name")) {
+                    subName = "";
+                }
+
+                if (codeCheck) {
+                    if (subCode.equals("") || subName.equals("")) {
+                        ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                        JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                    } else {
+                        pst = connection.prepareStatement("insert into [Subject](code,name) values(?,?)");
+                        pst.setString(1, subCode);
+                        pst.setString(2, subName);
+                        int k = pst.executeUpdate();
+                        if (k == 1) {
+
+                            ImageIcon image = new ImageIcon(getClass().getResource("/Images/admin (1).png"));
+                            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Subject Added Successefully!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                            setDefaultSub();
+                            subjectEnabled(false);
+                            SubjectTable();
+                            getAllSubs();
+                            subjectCode.setForeground(new Color(153,153,153));
+                            subjectName.setForeground(new Color(153,153,153));
+                        } else {
+                            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+                            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">adding Faild!</p></html>", "warning!", JOptionPane.INFORMATION_MESSAGE, image);
+
+                        }
+
+                    }
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(TeacherHome.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+
+        }
+
+    }//GEN-LAST:event_addSubjectActionPerformed
+
+    private void updateSubjectNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_updateSubjectNameFocusGained
+        // TODO add your handling code here:
+
+        if (updateSubjectName.getText().equals("Update Subject Name")) {
+            updateSubjectName.setText("");
+            updateSubjectName.setForeground(Color.white);
+        }
+
+
+    }//GEN-LAST:event_updateSubjectNameFocusGained
+
+    private void updateSubjectNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_updateSubjectNameFocusLost
+        // TODO add your handling code here:
+
+        if (updateSubjectName.getText().equals("")) {
+            updateSubjectName.setText("Update Subject Name");
+            updateSubjectName.setForeground(new Color(102, 102, 102));
+        }
+
+    }//GEN-LAST:event_updateSubjectNameFocusLost
+
+    private void updateSubjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateSubjectNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateSubjectNameActionPerformed
+
+    private void updateSubjectCodeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_updateSubjectCodeFocusGained
+        // TODO add your handling code here:
+
+        if (updateSubjectCode.getText().equals("Update Subject Code")) {
+            updateSubjectCode.setText("");
+            updateSubjectCode.setForeground(Color.white);
+        }
+
+
+    }//GEN-LAST:event_updateSubjectCodeFocusGained
+
+    private void updateSubjectCodeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_updateSubjectCodeFocusLost
+        // TODO add your handling code here:
+
+        if (updateSubjectCode.getText().equals("")) {
+            updateSubjectCode.setText("Update Subject Code");
+            updateSubjectCode.setForeground(new Color(102, 102, 102));
+        }
+
+
+    }//GEN-LAST:event_updateSubjectCodeFocusLost
+
+    private void updateSubjectCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateSubjectCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateSubjectCodeActionPerformed
+
+    private void subjectNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_subjectNameFocusGained
+        // TODO add your handling code here:
+
+        if (subjectName.getText().equals("Subject Name")) {
+            subjectName.setText("");
+            subjectName.setForeground(Color.white);
+        }
+
+
+    }//GEN-LAST:event_subjectNameFocusGained
+
+    private void subjectNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_subjectNameFocusLost
+        // TODO add your handling code here:
+
+        if (subjectName.getText().equals("")) {
+            subjectName.setText("Subject Name");
+            subjectName.setForeground(new Color(102, 102, 102));
+        }
+
+    }//GEN-LAST:event_subjectNameFocusLost
+
+    private void subjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_subjectNameActionPerformed
+
+    private void subjectCodeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_subjectCodeFocusGained
+        // TODO add your handling code here:
+
+        if (subjectCode.getText().equals("Subject Code")) {
+            subjectCode.setText("");
+            subjectCode.setForeground(Color.white);
+        }
+
+
+    }//GEN-LAST:event_subjectCodeFocusGained
+
+    private void subjectCodeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_subjectCodeFocusLost
+        // TODO add your handling code here:
+
+        if (subjectCode.getText().equals("")) {
+            subjectCode.setText("Subject Code");
+            subjectCode.setForeground(new Color(102, 102, 102));
+        }
+
+    }//GEN-LAST:event_subjectCodeFocusLost
+
+    private void subjectCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_subjectCodeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2107,6 +2634,13 @@ public class AdminHome extends javax.swing.JFrame {
         boxShowPwd1.setEnabled(b);
     }
 
+    public void subjectEnabled(boolean b) {
+        updateStudent.setEnabled(b);
+        deleteStudent.setEnabled(b);
+        updateSubjectCode.setEnabled(b);
+        updateSubjectName.setEnabled(b);
+    }
+
     public void setDefaultS() {
         updateAge.setText("Change Age");
         updatePhoneNumber.setText("Change PhoneNumber");
@@ -2127,6 +2661,14 @@ public class AdminHome extends javax.swing.JFrame {
         UpdateSubject4.setSelectedItem("NONE");
         UpdateSubject5.setSelectedItem("NONE");
         UpdateSubject6.setSelectedItem("NONE");
+    }
+
+    public void setDefaultSub() {
+        updateSubjectCode.setText("Update Subject Code");
+        updateSubjectName.setText("Update Subject Name");
+        subjectName.setText("Subject Name");
+        subjectCode.setText("Subject Code");
+
     }
 
 
@@ -2150,6 +2692,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JPasswordField UpdatepwdTeacherRewrite1;
     private javax.swing.JPasswordField UpdatepwdTeacherRewrite2;
     private javax.swing.JButton addStudent;
+    private javax.swing.JButton addSubject;
     private javax.swing.JButton addTeacher;
     private javax.swing.JTextField adminName;
     private javax.swing.JTextField adminUserName;
@@ -2161,6 +2704,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JCheckBox boxShowPwd2;
     private javax.swing.JButton closeApplication;
     private javax.swing.JButton deleteStudent;
+    private javax.swing.JButton deleteSubject;
     private javax.swing.JButton deleteTeacher;
     private javax.swing.JButton goBackButton;
     private javax.swing.JLabel jLabel1;
@@ -2175,6 +2719,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -2183,17 +2728,25 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JButton logout;
     private javax.swing.JButton profile;
     private CustomComponent.TableTextCenter studentTable;
+    private javax.swing.JTextField subjectCode;
+    private javax.swing.JTextField subjectName;
+    private CustomComponent.TableTextCenter subjectTable;
     private CustomComponent.TableTextCenter teacherTable;
     private javax.swing.JButton updateAdmin;
     private javax.swing.JTextField updateAge;
     private javax.swing.JTextField updatePhoneNumber;
     private javax.swing.JButton updateStudent;
+    private javax.swing.JButton updateSubject;
+    private javax.swing.JTextField updateSubjectCode;
+    private javax.swing.JTextField updateSubjectName;
     private javax.swing.JTextField updateUserName;
     // End of variables declaration//GEN-END:variables
 }

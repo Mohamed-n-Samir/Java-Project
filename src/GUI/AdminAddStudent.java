@@ -573,17 +573,17 @@ public class AdminAddStudent extends javax.swing.JFrame {
         }
         int sdAge = -1;
         try {
-            sdAge = (Integer.parseInt(studentAge.getText()) >= 17 && Integer.parseInt(studentAge.getText()) <= 24) ? Integer.parseInt(studentAge.getText()) : -1;
+            sdAge = (Integer.parseInt(studentAge.getText()) >= 18 && Integer.parseInt(studentAge.getText()) <= 24) ? Integer.parseInt(studentAge.getText()) : -1;
         } catch (NumberFormatException ex) {
             cheak = false;
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Enter Correct integar Number<br> More than 16 and less than 24!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Enter Correct integar Number<br> More than 17 and less than 24!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
         }
 
         if (sdAge == -1) {
             cheak = false;
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Enter Correct integar Number<br> More than 16 and less than 24!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Enter Correct integar Number<br> More than 17 and less than 24!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
         }
 
         if (cheak) {
