@@ -319,11 +319,11 @@ public class StudentLogin extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-        String url = "jdbc:sqlserver://PANDETA:1433;"
-                + "database=Project;"
-                + "trustServerCertificate=true;"
-                + "integratedSecurity=true;";
-        DbConnection dbConnection = new DbConnection(url);
+//        String url = "jdbc:sqlserver://PANDETA:1433;"
+//                + "database=Project;"
+//                + "trustServerCertificate=true;"
+//                + "integratedSecurity=true;";
+        DbConnection dbConnection = new DbConnection();
         Connection connection = dbConnection.ConnectDB();
 
         try {

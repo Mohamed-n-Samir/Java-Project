@@ -4,10 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-//import java.util.HashMap;
-//import java.util.Map;
 import javax.swing.BorderFactory;
-//import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -39,12 +36,7 @@ public class TableTextCenter extends JTable {
     }
 
     private class TableDarkHeader extends DefaultTableCellRenderer {
-
-//        private Map<Integer, Integer> alignment = new HashMap<>();
-//
-//        public void setAlignment(int column, int align) {
-//            alignment.put(column, align);
-//        }
+        
         @Override
         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
             Component com = super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
@@ -63,13 +55,9 @@ public class TableTextCenter extends JTable {
         public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int row, int column) {
             Component com = super.getTableCellRendererComponent(jtable, o, bln, bln1, row, column);
             if (isCellSelected(row, column)) {
-//                if (row % 2 == 0) {
                 com.setBackground(new Color(70, 202, 255));     //255, 44, 107
                 com.setForeground(new Color(255, 255, 255));
 
-//                } else {
-//                    com.setBackground(new Color(29, 86, 127));
-//                }
             } else {
                 com.setForeground(new Color(200, 200, 200));
                 if (row % 2 == 0) {

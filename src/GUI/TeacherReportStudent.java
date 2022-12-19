@@ -309,6 +309,7 @@ public class TeacherReportStudent extends javax.swing.JFrame {
                 if (k == 1) {
                     tableUnFocus(false);
                     StudentTable();
+                    reportTextArea.setText("");
                     JOptionPane.showMessageDialog(this, "Report Submitted Successfully!", "Done", JOptionPane.OK_OPTION);
 
                 } else {

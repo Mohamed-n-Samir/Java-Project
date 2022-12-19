@@ -38,6 +38,8 @@ public class AdminHome extends javax.swing.JFrame {
                 getAllSubs();
                 studentEnabled(false);
                 subjectEnabled(false);
+                updateSubject.setEnabled(false);
+                deleteSubject.setEnabled(false);
 
                 if (isLoggedIn()) {
                     jLabel2.setText("Welcome " + Admin.getName());
@@ -1245,26 +1247,22 @@ public class AdminHome extends javax.swing.JFrame {
         if (newName.equals("")) {
             newName = Student.getName();
 
-        }
-        if (newName.equals("wrong input")) {
+        } else if (newName.equals("wrong input")) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Name Field make sure that<br>the name is more than 3 character with no numbers<br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
 
-        }
-        if (newPassword.equals("wrong Password")) {
+        } else if (newPassword.equals("wrong Password")) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the password Field make sure that<br>the password is at least 6 characters <br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
 
-        }
-        if (!newPassword.equals(newPasswordRewrite)) {
+        } else if (!newPassword.equals(newPasswordRewrite)) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the password Field make sure that<br>the 2 password field is exactly the same!<br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
 
-        }
-        if (newEmail.equals("wrong email")) {
+        } else if (newEmail.equals("wrong email")) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Email Field make sure that<br>the Email you write is in correct form!<br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
@@ -2189,7 +2187,8 @@ public class AdminHome extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         subjectEnabled(true);
-
+        updateSubject.setEnabled(true);
+        deleteSubject.setEnabled(true);
         updateSubjectCode.setForeground(Color.white);
 
         updateSubjectName.setForeground(Color.white);
@@ -2265,7 +2264,6 @@ public class AdminHome extends javax.swing.JFrame {
                     pst.setString(3, subjectCode1);
                     int k = pst.executeUpdate();
                     if (k == 1) {
-
                         if (updateSubjectCode.getText().equals("Update Subject Code") && updateSubjectName.getText().equals("Update Subject Name")) {
                             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
                             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Nothing Updated!</p></html>", "Warning!", JOptionPane.INFORMATION_MESSAGE, image);
@@ -2277,7 +2275,11 @@ public class AdminHome extends javax.swing.JFrame {
                         }
                         setDefaultSub();
                         subjectEnabled(false);
+                        updateSubject.setEnabled(false);
+                        deleteSubject.setEnabled(false);
                         SubjectTable();
+                        StudentTable();
+                        TeacherTable();
 
                     }
                 }
@@ -2312,7 +2314,12 @@ public class AdminHome extends javax.swing.JFrame {
                 if (k == 1) {
                     setDefaultSub();
                     subjectEnabled(false);
+                    updateSubject.setEnabled(false);
+                    deleteSubject.setEnabled(false);
                     SubjectTable();
+                    StudentTable();
+                    TeacherTable();
+                    getAllSubs();
 
                     ImageIcon image = new ImageIcon(getClass().getResource("/Images/admin (1).png"));
                     JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Successefully Deleted!</p></html>", "Done!", JOptionPane.INFORMATION_MESSAGE, image);
@@ -2389,8 +2396,8 @@ public class AdminHome extends javax.swing.JFrame {
                             subjectEnabled(false);
                             SubjectTable();
                             getAllSubs();
-                            subjectCode.setForeground(new Color(153,153,153));
-                            subjectName.setForeground(new Color(153,153,153));
+                            subjectCode.setForeground(new Color(153, 153, 153));
+                            subjectName.setForeground(new Color(153, 153, 153));
                         } else {
                             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
                             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">adding Faild!</p></html>", "warning!", JOptionPane.INFORMATION_MESSAGE, image);
@@ -2635,8 +2642,6 @@ public class AdminHome extends javax.swing.JFrame {
     }
 
     public void subjectEnabled(boolean b) {
-        updateStudent.setEnabled(b);
-        deleteStudent.setEnabled(b);
         updateSubjectCode.setEnabled(b);
         updateSubjectName.setEnabled(b);
     }

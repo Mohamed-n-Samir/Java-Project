@@ -369,23 +369,18 @@ public class AdminAddTeacher extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Name Field make sure that<br>the name is 3 character or more with no numbers.</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
 
-        }
-        if (sdPassword.equals("wrong Password")) {
+        } else if (sdEmail.equals("wrong email")) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Email Field make sure that<br>the Email you write is in correct form!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            cheak = false;
+        } else if (sdPassword.equals("wrong Password")) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the password Field make sure that<br>the password is at least 6 characters <br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
 
-        }
-
-        if (sdEmail.equals("wrong email")) {
+        } else if (sub1.equals(sub2) || sub2.equals(sub3)) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Email Field make sure that<br>the Email you write is in correct form!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
-            cheak = false;
-        }
-
-        if (sub1.equals(sub2) || sub2.equals(sub3)) {
-            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Subject Fields make sure that<br>the 3 subjects are diffrent or at least there is only one none.<br></p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Subject Fields make sure that<br>the 3 subjects are diffrent or there's 2 NONE's at most!.<br></p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
         }
 

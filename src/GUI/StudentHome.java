@@ -125,8 +125,6 @@ public class StudentHome extends javax.swing.JFrame {
             TeacherReports.getColumnModel().getColumn(6).setMinWidth(0);
             TeacherReports.getColumnModel().getColumn(6).setMaxWidth(0);
             TeacherReports.fixTable(jScrollPane3);
-//            studentTestTable.getColumnModel().getColumn(0).setMinWidth(0);
-//            studentTestTable.getColumnModel().getColumn(0).setMaxWidth(0);
 
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(TeacherHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -189,13 +187,13 @@ public class StudentHome extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         Subjects = new javax.swing.JComboBox<>();
         testIDSearch = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        studentTestTable = new javax.swing.JTable();
         studentEnterTestButton = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        studentTestTable = new CustomComponent.TableTextCenter();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        studentDoneTestTable = new javax.swing.JTable();
         showDoneTestButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        studentDoneTestTable = new CustomComponent.TableTextCenter();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         readTable = new CustomComponent.TableTextCenter();
@@ -381,28 +379,6 @@ public class StudentHome extends javax.swing.JFrame {
         });
         jPanel1.add(testIDSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, 100, 50));
 
-        studentTestTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        studentTestTable.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                studentTestTableFocusLost(evt);
-            }
-        });
-        studentTestTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                studentTestTableMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(studentTestTable);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 40, 760, 450));
-
         studentEnterTestButton.setBackground(new java.awt.Color(70, 202, 255));
         studentEnterTestButton.setFont(new java.awt.Font("Lato", 2, 18)); // NOI18N
         studentEnterTestButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -416,11 +392,7 @@ public class StudentHome extends javax.swing.JFrame {
         });
         jPanel1.add(studentEnterTestButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 430, 370, 60));
 
-        jTabbedPane1.addTab("tab1", jPanel1);
-
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        studentDoneTestTable.setModel(new javax.swing.table.DefaultTableModel(
+        studentTestTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -428,19 +400,18 @@ public class StudentHome extends javax.swing.JFrame {
 
             }
         ));
-        studentDoneTestTable.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                studentDoneTestTableFocusLost(evt);
-            }
-        });
-        studentDoneTestTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        studentTestTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                studentDoneTestTableMouseClicked(evt);
+                studentTestTableMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(studentDoneTestTable);
+        jScrollPane6.setViewportView(studentTestTable);
 
-        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 760, 450));
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 40, 760, 450));
+
+        jTabbedPane1.addTab("tab1", jPanel1);
+
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         showDoneTestButton.setBackground(new java.awt.Color(70, 202, 255));
         showDoneTestButton.setFont(new java.awt.Font("Lato", 2, 18)); // NOI18N
@@ -454,6 +425,23 @@ public class StudentHome extends javax.swing.JFrame {
             }
         });
         jPanel3.add(showDoneTestButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 490, 370, 60));
+
+        studentDoneTestTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        studentDoneTestTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                studentDoneTestTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(studentDoneTestTable);
+
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 760, 450));
 
         jTabbedPane1.addTab("tab2", jPanel3);
 
@@ -877,32 +865,6 @@ public class StudentHome extends javax.swing.JFrame {
 
     }//GEN-LAST:event_testIDSearchActionPerformed
 
-    private void studentTestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentTestTableMouseClicked
-        // TODO add your handling code here:
-
-        DefaultTableModel d1 = (DefaultTableModel) studentTestTable.getModel();
-        int SelectIndex = studentTestTable.getSelectedRow();
-        studentTest.setTestID(Integer.parseInt(d1.getValueAt(SelectIndex, 6).toString()));
-        studentTest.setTestName(d1.getValueAt(SelectIndex, 1).toString());
-        studentTest.setTestTime(Integer.parseInt(d1.getValueAt(SelectIndex, 4).toString()));
-        studentTest.setTestMark(Integer.parseInt(d1.getValueAt(SelectIndex, 3).toString()));
-        try {
-            Connection connection = dbConnection.getConnection();
-            PreparedStatement pst;
-            pst = connection.prepareStatement("select * from StudentsTestOnce Where (testID = " + studentTest.getTestID() + " and studentID = " + Student.getID() + " )");
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                studentEnterTestButton.setEnabled(false);
-            } else {
-                studentEnterTestButton.setEnabled(true);
-
-            }
-
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(TeacherHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_studentTestTableMouseClicked
-
     private void studentEnterTestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentEnterTestButtonActionPerformed
         // TODO add your handling code here:
         ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (2).png"));
@@ -915,35 +877,12 @@ public class StudentHome extends javax.swing.JFrame {
 
     }//GEN-LAST:event_studentEnterTestButtonActionPerformed
 
-    private void studentTestTableFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_studentTestTableFocusLost
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_studentTestTableFocusLost
-
     private void SubjectsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubjectsActionPerformed
         // TODO add your handling code here:
 
         setStudentTestTableNoRow();
 
     }//GEN-LAST:event_SubjectsActionPerformed
-
-    private void studentDoneTestTableFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_studentDoneTestTableFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_studentDoneTestTableFocusLost
-
-    private void studentDoneTestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentDoneTestTableMouseClicked
-        // TODO add your handling code here:
-
-        DefaultTableModel d1 = (DefaultTableModel) studentDoneTestTable.getModel();
-        int SelectIndex = studentDoneTestTable.getSelectedRow();
-        StudentTest.setTestID(Integer.parseInt(d1.getValueAt(SelectIndex, 0).toString()));
-        StudentTest.setTestName(d1.getValueAt(SelectIndex, 1).toString());
-        StudentTest.setTestTime(Integer.parseInt(d1.getValueAt(SelectIndex, 3).toString()));
-        StudentTest.setStudentMark(Integer.parseInt(d1.getValueAt(SelectIndex, 6).toString()));
-        StudentTest.setTestMark(Integer.parseInt(d1.getValueAt(SelectIndex, 2).toString()));
-        showDoneTestButton.setEnabled(true);
-
-    }//GEN-LAST:event_studentDoneTestTableMouseClicked
 
     private void showDoneTestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDoneTestButtonActionPerformed
         // TODO add your handling code here:
@@ -1001,6 +940,47 @@ public class StudentHome extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_TeacherReportsMouseClicked
+
+    private void studentTestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentTestTableMouseClicked
+        // TODO add your handling code here:
+
+        DefaultTableModel d1 = (DefaultTableModel) studentTestTable.getModel();
+        int SelectIndex = studentTestTable.getSelectedRow();
+        studentTest.setTestID(Integer.parseInt(d1.getValueAt(SelectIndex, 6).toString()));
+        studentTest.setTestName(d1.getValueAt(SelectIndex, 1).toString());
+        studentTest.setTestTime(Integer.parseInt(d1.getValueAt(SelectIndex, 4).toString()));
+        studentTest.setTestMark(Integer.parseInt(d1.getValueAt(SelectIndex, 3).toString()));
+        try {
+            Connection connection = dbConnection.getConnection();
+            PreparedStatement pst;
+            pst = connection.prepareStatement("select * from StudentsTestOnce Where (testID = " + studentTest.getTestID() + " and studentID = " + Student.getID() + " )");
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                studentEnterTestButton.setEnabled(false);
+            } else {
+                studentEnterTestButton.setEnabled(true);
+
+            }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(TeacherHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_studentTestTableMouseClicked
+
+    private void studentDoneTestTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentDoneTestTableMouseClicked
+        // TODO add your handling code here:
+
+        DefaultTableModel d1 = (DefaultTableModel) studentDoneTestTable.getModel();
+        int SelectIndex = studentDoneTestTable.getSelectedRow();
+        StudentTest.setTestID(Integer.parseInt(d1.getValueAt(SelectIndex, 0).toString()));
+        StudentTest.setTestName(d1.getValueAt(SelectIndex, 1).toString());
+        StudentTest.setTestTime(Integer.parseInt(d1.getValueAt(SelectIndex, 3).toString()));
+        StudentTest.setStudentMark(Integer.parseInt(d1.getValueAt(SelectIndex, 6).toString()));
+        StudentTest.setTestMark(Integer.parseInt(d1.getValueAt(SelectIndex, 2).toString()));
+        showDoneTestButton.setEnabled(true);
+
+    }//GEN-LAST:event_studentDoneTestTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1111,7 +1091,7 @@ public class StudentHome extends javax.swing.JFrame {
                     + "on Test.ID = StudentsTestOnce.testID\n"
                     + "INNER JOIN Teacher\n"
                     + "on Teacher.ID = Test.teacherID\n"
-                    + "Where studentID = " + Student.getID()+"\n"
+                    + "Where studentID = " + Student.getID() + "\n"
                     + "ORDER BY StudentsTestOnce.testID DESC");
 
             ResultSet rs = pst.executeQuery();
@@ -1170,17 +1150,17 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     public javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton logout;
     private CustomComponent.TableTextCenter readTable;
     private javax.swing.JButton showDoneTestButton;
     private javax.swing.JTextField studentAge;
-    private javax.swing.JTable studentDoneTestTable;
+    private CustomComponent.TableTextCenter studentDoneTestTable;
     private javax.swing.JTextField studentEmail;
     private javax.swing.JButton studentEnterTestButton;
     private javax.swing.JTextField studentID;
@@ -1192,7 +1172,7 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JTextField studentSubject2;
     private javax.swing.JTextField studentSubject3;
     private javax.swing.JButton studentTestDone;
-    private javax.swing.JTable studentTestTable;
+    private CustomComponent.TableTextCenter studentTestTable;
     private javax.swing.JButton studentTests;
     private javax.swing.JButton studentUpdateInfo;
     private javax.swing.JButton testIDSearch;

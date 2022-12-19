@@ -537,32 +537,32 @@ public class AdminAddStudent extends javax.swing.JFrame {
 
         boolean cheak = true;
 
+        int sdAge = -1;
+        try {
+            sdAge = (Integer.parseInt(studentAge.getText()) >= 18 && Integer.parseInt(studentAge.getText()) <= 24) ? Integer.parseInt(studentAge.getText()) : -1;
+        } catch (NumberFormatException ex) {
+            cheak = false;
+        }
+
         if (sdName.equals("wrong input")) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Name Field make sure that<br>the name is 3 character or more with no numbers.</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
 
-        }
-        if (sdPassword.equals("wrong Password")) {
+        } else if (sdEmail.equals("wrong email")) {
+            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Email Field make sure that<br>the Email you write is in correct form!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+            cheak = false;
+        } else if (sdPassword.equals("wrong Password")) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the password Field make sure that<br>the password is at least 6 characters <br>if you need to leave the name as it is leave it empty!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
 
-        }
-
-        if (sdEmail.equals("wrong email")) {
-            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Email Field make sure that<br>the Email you write is in correct form!</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
+        } else if (sdAge == -1) {
             cheak = false;
-        }
-
-        if (sub1.equals(sub2) || sub2.equals(sub3)) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Subject Fields make sure that<br>the 3 subjects are diffrent or at least there is only one none.<br></p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
-            cheak = false;
-        }
-
-        if (sdPhone.equals("wrong input")) {
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Enter Correct integar Number<br> More than 17 and less than 24!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
+        } else if (sdPhone.equals("wrong input")) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
             JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the phone Field make sure that<br>you enterd a correct phone format as<br>123-456-7890\n"
                     + "(123) 456-7890\n"
@@ -570,20 +570,10 @@ public class AdminAddStudent extends javax.swing.JFrame {
                     + "123.456.7890\n"
                     + "+91 (123) 456-7890</p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
-        }
-        int sdAge = -1;
-        try {
-            sdAge = (Integer.parseInt(studentAge.getText()) >= 18 && Integer.parseInt(studentAge.getText()) <= 24) ? Integer.parseInt(studentAge.getText()) : -1;
-        } catch (NumberFormatException ex) {
-            cheak = false;
+        } else if ((sub1.equals(sub2) || sub2.equals(sub3))) {
             ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Enter Correct integar Number<br> More than 17 and less than 24!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
-        }
-
-        if (sdAge == -1) {
+            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Change the Subject Fields make sure that<br>the 3 subjects are diffrent or at least there is only one none.<br></p></html>", "Error!", JOptionPane.INFORMATION_MESSAGE, image);
             cheak = false;
-            ImageIcon image = new ImageIcon(getClass().getResource("/Images/teacher (3).png"));
-            JOptionPane.showMessageDialog(null, "<html><p style=\"text-align: center;\">Wrong input please Enter Correct integar Number<br> More than 17 and less than 24!</p></html>", "Try Again!", JOptionPane.INFORMATION_MESSAGE, image);
         }
 
         if (cheak) {

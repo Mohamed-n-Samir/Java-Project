@@ -8,8 +8,7 @@ import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
-//import java.lang.System.Logger;
-//import java.lang.System.Logger.Level;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import java.sql.*;
